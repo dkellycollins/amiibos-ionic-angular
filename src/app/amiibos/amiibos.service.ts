@@ -50,11 +50,14 @@ export class AmiibosService {
   public getAmiiboSeries(): Array<string> {
     return this.loadAmiibos()
       .map(amiibo => amiibo.series)
-      .filter((value, index, self) => self.indexOf(value) === index);
+      .filter(value => !!value)
+      .filter((value, index, self) => self.indexOf(value) === index)
+      .sort();
   }
 
   public getAmiibosBySeries(series: string): Array<AmiiboModel> {
-    return this.loadAmiibos().filter(amiibo => amiibo.series === series);
+    return this.loadAmiibos()
+      .filter(amiibo => amiibo.series === series);
   }
 
   private loadAmiibos(): Array<AmiiboModel> {

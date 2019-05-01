@@ -1,6 +1,11 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>amiibos</ion-title>
+    <ion-title>{{selectedSeries}}</ion-title>
+    <ion-buttons slot="secondary">
+      <ion-button (click)="selectSeries()">
+        <ion-icon name="funnel"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -20,6 +25,6 @@
 <ion-footer>
   <ion-toolbar>
     <p>Collected {{getCollectedAmiibos()}} out of {{amiibos.length}}</p>
-    <ion-progress-bar color="primary" [value]="getProgress()"></ion-progress-bar>
+    <ion-progress-bar [color]="getProgress() === 1 ?  'secondary' : 'primary'" [value]="getProgress()"></ion-progress-bar>
   </ion-toolbar>
 </ion-footer>
