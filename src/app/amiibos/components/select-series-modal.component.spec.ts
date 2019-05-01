@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SelectSeriesComponent } from './select-series.component';
+import { SelectSeriesModalComponent } from './select-series-modal.component';
 
 describe('SelectSeriesComponent', () => {
-  let component: SelectSeriesComponent;
-  let fixture: ComponentFixture<SelectSeriesComponent>;
+  let component: SelectSeriesModalComponent;
+  let fixture: ComponentFixture<SelectSeriesModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectSeriesComponent ],
+      declarations: [ SelectSeriesModalComponent ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SelectSeriesComponent);
+    fixture = TestBed.createComponent(SelectSeriesModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

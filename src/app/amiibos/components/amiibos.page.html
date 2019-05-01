@@ -24,7 +24,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <p>Collected {{getCollectedAmiibos()}} out of {{amiibos.length}}</p>
+    <p>Collected {{getCollectedAmiibosCount()}} out of {{amiibos.length}}</p>
     <ion-progress-bar [color]="getProgress() === 1 ?  'secondary' : 'primary'" [value]="getProgress()"></ion-progress-bar>
   </ion-toolbar>
 </ion-footer>

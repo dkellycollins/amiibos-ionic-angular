@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
-import { AmiibosPage } from './amiibos.page';
-import { SelectSeriesComponent } from './select-series.component';
+import { AmiibosPage } from './components/amiibos.page';
+import { SelectSeriesModalComponent } from './components/select-series-modal.component';
 
 const routes: Routes = [
   {
@@ -16,14 +15,13 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
     IonicModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
     AmiibosPage,
-    SelectSeriesComponent
+    SelectSeriesModalComponent
   ],
-  entryComponents: [SelectSeriesComponent]
+  entryComponents: [SelectSeriesModalComponent]
 })
 export class AmiibosPageModule {}

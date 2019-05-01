@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AmiibosService } from './amiibos.service';
+import { AmiibosService } from '../services/amiibos.service';
 import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-select-series',
-  templateUrl: './select-series.component.html',
+  templateUrl: './select-series-modal.component.html',
 })
-export class SelectSeriesComponent implements OnInit {
+export class SelectSeriesModalComponent implements OnInit {
 
   public series: Array<string> = [];
 
@@ -26,5 +25,4 @@ export class SelectSeriesComponent implements OnInit {
   public cancel(): void {
     this.modalController.dismiss();
   }
-
 }
