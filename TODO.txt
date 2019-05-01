@@ -1,0 +1,11 @@
+Features:
+ - Master / Detail list of Amiibos
+ - Allow user to select Amiibos, indicating they have collected it.
+ - Display progress of collection at the top of the page.
+ - Setup e2e testing for the above features.
+ - PWA support.
+ - Deploy static website to AWS.
+ - Generate APK for Android.
+ - Prompt user to sign in through Cognito.
+ - Retrieve amiibos data from api.
+ - Save collections to api.

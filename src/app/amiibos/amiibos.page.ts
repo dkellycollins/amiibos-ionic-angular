@@ -4,7 +4,6 @@ import { AmiibosService, AmiiboModel } from './amiibos.service';
 @Component({
   selector: 'app-amiibos',
   templateUrl: './amiibos.page.html',
-  styleUrls: ['./amiibos.page.scss'],
 })
 export class AmiibosPage implements OnInit {
 
