@@ -1,9 +1,25 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>amiibos</ion-title>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-
+  <ion-list>
+    <ion-item *ngFor="let amiibo of amiibos" lines="full">
+      <ion-avatar slot="start">
+        <img [src]="amiibo.figureUrl" />
+      </ion-avatar>
+      <ion-label>
+        <h4>{{amiibo.name}}</h4>
+        <p>{{amiibo.series}}</p>
+      </ion-label>
+      <ion-toggle [checked]="isCollected(amiibo.slug)" (ionChange)="toggleAmiibo(amiibo.slug, $event)"></ion-toggle>
+    </ion-item>
+  </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <p>Collected {{getCollectedAmiibos()}} out of {{amiibos.length}}</p>
+    <ion-progress-bar color="primary" [value]="getProgress()"></ion-progress-bar>
+  </ion-toolbar>
+</ion-footer>
