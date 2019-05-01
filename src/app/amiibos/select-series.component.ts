@@ -5,7 +5,6 @@ import { ModalController } from '@ionic/angular';
 @Component({
   selector: 'app-select-series',
   templateUrl: './select-series.component.html',
-  styleUrls: ['./select-series.component.scss'],
 })
 export class SelectSeriesComponent implements OnInit {
 
