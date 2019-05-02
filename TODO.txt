@@ -1,11 +1,12 @@
 Features:
- - Setup e2e testing with Cypress/Storybook.
+ - Setup e2e testing with Cypress.
  - Prompt user to sign in through Cognito.
- - Publish application to Play Store.
- - Rebuild application with ng universal.
+ - Publish application to Play Store with capacitor.
  - Host serverless api to retrieve amiibos data from.
  - Host images.
  - Save collections to api.
 
 Cleanup:
+ - Address vulnerability.
+ - Add notifications when build fails. 
  - Clean up build artifacts.
