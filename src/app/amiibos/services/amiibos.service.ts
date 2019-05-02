@@ -9,8 +9,8 @@ export class AmiibosService {
 
   /**
    * Gets the list of Amiibos Series available.
-   * 
-   * @returns {Array<string>} - The series available.
+   *
+   * @returns The series available.
    */
   public getAmiiboSeries(): Array<string> {
     return this.loadAmiibos()
@@ -22,8 +22,8 @@ export class AmiibosService {
 
   /**
    * Gets all of the available amiibos.
-   * 
-   * @returns {Array<AmiiboModel>} - All available amiibos.
+   *
+   * @returns All available amiibos.
    */
   public getAmiibos(): Array<AmiiboModel> {
     return this.loadAmiibos();
@@ -31,9 +31,9 @@ export class AmiibosService {
 
   /**
    * Gets the collection of Amiibos that belong to the specified series.
-   * 
-   * @param {string} series - The name of the series to filter by.
-   * @returns {Array<AmiiboModel>} - The Amiibos that belong to specified series.
+   *
+   * @param series - The name of the series to filter by.
+   * @returns The Amiibos that belong to specified series.
    */
   public getAmiibosBySeries(series: string): Array<AmiiboModel> {
     return this.loadAmiibos()
@@ -42,9 +42,9 @@ export class AmiibosService {
 
   /**
    * Finds the Amiibo with the provided slug.
-   * 
-   * @param {string} slug - The unique identifier of the Amiibo.
-   * @returns {AmiiboModel} - The matching Amiibo.
+   *
+   * @param slug The unique identifier of the Amiibo.
+   * @returns The matching Amiibo.
    */
   public getAmiiboBySlug(slug: string): AmiiboModel {
     return this.loadAmiibos()
@@ -53,8 +53,8 @@ export class AmiibosService {
 
   /**
    * Loads Amiibos data from the raw data source.
-   * 
-   * @returns {Array<AmiiboModel>} - The complete collection of Amiibos.
+   *
+   * @returns The complete collection of Amiibos.
    */
   private loadAmiibos(): Array<AmiiboModel> {
     const { amiiboList } = amiibosData;

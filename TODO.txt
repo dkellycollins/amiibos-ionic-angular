@@ -1,5 +1,4 @@
 Features:
- - Setup CI/CD in AWS.
  - Setup e2e testing with Cypress/Storybook.
  - Prompt user to sign in through Cognito.
  - Publish application to Play Store.
@@ -7,3 +6,6 @@ Features:
  - Host serverless api to retrieve amiibos data from.
  - Host images.
  - Save collections to api.
+
+Cleanup:
+ - Clean up build artifacts.

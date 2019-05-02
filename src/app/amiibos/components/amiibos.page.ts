@@ -12,7 +12,7 @@ import { ToggleChangeEventDetail } from '@ionic/core';
 })
 export class AmiibosPage {
 
-  public selectedSeries: string = 'All Amiibos';
+  public selectedSeries = 'All Amiibos';
   public amiibos: Array<AmiiboModel> = this.amiibosService.getAmiibos();
 
   public constructor(
@@ -32,8 +32,7 @@ export class AmiibosPage {
     if (data === 'All') {
       this.selectedSeries = 'All Amiibos';
       this.amiibos = this.amiibosService.getAmiibos();
-    }
-    else if (data !== undefined) {
+    } else if (data !== undefined) {
       this.selectedSeries = data;
       this.amiibos = this.amiibosService.getAmiibosBySeries(data);
     }

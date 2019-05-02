@@ -25,8 +25,7 @@ export class UserAmiibosService {
   private save() {
     try {
       localStorage.setItem('UserAmiibosService.collectedAmiibos', JSON.stringify(this.collectedAmiibos));
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   }
@@ -34,13 +33,12 @@ export class UserAmiibosService {
   private load(): { [key: string]: boolean } {
     try {
       const data = localStorage.getItem('UserAmiibosService.collectedAmiibos');
-      
+
       if (!data) {
         return {};
       }
       return JSON.parse(data);
-    }
-    catch (error) {
+    } catch (error) {
       console.error(error);
       return {};
     }
