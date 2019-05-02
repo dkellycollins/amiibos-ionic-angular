@@ -11,4 +11,4 @@ artifacts:
   files:
     - '**/*'
   name: amiibos-ionic-angular
-  base_directory: 'www'
+  base-directory: 'www'
