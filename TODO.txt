@@ -1,11 +1,9 @@
 Features:
- - Master / Detail list of Amiibos
- - Allow user to select Amiibos, indicating they have collected it.
- - Display progress of collection at the top of the page.
- - Setup e2e testing for the above features.
- - PWA support.
- - Deploy static website to AWS.
- - Generate APK for Android.
+ - Setup CI/CD in AWS.
+ - Setup e2e testing with Cypress/Storybook.
  - Prompt user to sign in through Cognito.
- - Retrieve amiibos data from api.
+ - Publish application to Play Store.
+ - Rebuild application with ng universal.
+ - Host serverless api to retrieve amiibos data from.
+ - Host images.
  - Save collections to api.
