@@ -1,0 +1,7 @@
+{
+  "appId": "io.dkellycollins.amiibosIonicAngular",
+  "appName": "amiibos-ionic-angular",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www"
+}
