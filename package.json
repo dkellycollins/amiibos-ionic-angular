@@ -10,8 +10,7 @@
     "build:prod": "ionic build --prod",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "publish:aws": "npm run build:prod && aws s3 sync ./www s3://amiibos-ionic-angular --delete"
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
