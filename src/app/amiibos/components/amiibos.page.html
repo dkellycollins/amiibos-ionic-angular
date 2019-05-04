@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>{{selectedSeries}}</ion-title>
+    <ion-title>{{selectedSeries$ | async}}</ion-title>
     <ion-buttons slot="secondary">
       <ion-button (click)="selectSeries()">
         <ion-icon name="funnel"></ion-icon>
@@ -10,7 +10,7 @@
 </ion-header>
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let amiibo of amiibos" lines="full">
+    <ion-item *ngFor="let amiibo of collectedAmiibos$ | async; trackBy: getAmiiboId" lines="full">
       <ion-avatar slot="start">
         <img [src]="amiibo.figureUrl" />
       </ion-avatar>
@@ -18,13 +18,13 @@
         <h4>{{amiibo.name}}</h4>
         <p>{{amiibo.series}}</p>
       </ion-label>
-      <ion-toggle [checked]="isCollected(amiibo.slug)" (ionChange)="toggleAmiibo(amiibo.slug, $event)"></ion-toggle>
+      <ion-toggle [checked]="amiibo.isCollected" (ionChange)="toggleAmiibo(amiibo.slug, $event)"></ion-toggle>
     </ion-item>
   </ion-list>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <p>Collected {{getCollectedAmiibosCount()}} out of {{amiibos.length}}</p>
-    <ion-progress-bar [color]="getProgress() === 1 ?  'success' : 'primary'" [value]="getProgress()"></ion-progress-bar>
+    <p>Collected {{collectedAmiibosCount$ | async}} out of {{amiibosLength$ | async}}</p>
+    <ion-progress-bar color="success" [value]="progress$ | async"></ion-progress-bar>
   </ion-toolbar>
 </ion-footer>

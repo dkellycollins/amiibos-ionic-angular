@@ -1,36 +1,41 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { skip, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserAmiibosService {
 
-  private readonly collectedAmiibos: { [slug: string]: boolean };
+  private readonly collectedAmiibos$: BehaviorSubject<Record<string, boolean>>;
 
   public constructor() {
-    this.collectedAmiibos = this.load();
+    this.collectedAmiibos$ = new BehaviorSubject<Record<string, boolean>>(this.load());
+    this.collectedAmiibos$.pipe(skip(1)).subscribe(this.save.bind(this));
   }
 
-  public getCollectedAmiibos(): Array<string> {
-    return Object.entries(this.collectedAmiibos)
-      .filter(([_, collected]) => collected)
-      .map(([map]) => map);
+  public getCollectedAmiibos(): Observable<Array<string>> {
+    return this.collectedAmiibos$.pipe(
+      map(collectedAmiibos => Object.entries(collectedAmiibos).filter(([_, collected]) => collected).map(([map]) => map)),
+    );
   }
 
   public toggleAmiibo(slug: string, collected: boolean) {
-    this.collectedAmiibos[slug] = collected;
-    this.save();
+    this.collectedAmiibos$.next({
+      ...this.collectedAmiibos$.getValue(),
+      [slug]: collected
+    });
   }
 
-  private save() {
+  private save(collectedAmiibos: Record<string, boolean>) {
     try {
-      localStorage.setItem('UserAmiibosService.collectedAmiibos', JSON.stringify(this.collectedAmiibos));
+      localStorage.setItem('UserAmiibosService.collectedAmiibos', JSON.stringify(collectedAmiibos));
     } catch (error) {
       console.error(error);
     }
   }
 
-  private load(): { [key: string]: boolean } {
+  private load(): Record<string, boolean> {
     try {
       const data = localStorage.getItem('UserAmiibosService.collectedAmiibos');
 
