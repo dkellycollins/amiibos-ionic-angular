@@ -1,5 +1,7 @@
 {
   "name": "amiibos-ionic-angular",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
