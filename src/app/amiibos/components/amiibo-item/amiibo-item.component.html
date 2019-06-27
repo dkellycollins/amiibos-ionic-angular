@@ -7,7 +7,7 @@
       <h4>{{amiibo.name}}</h4>
       <p>{{amiibo.series}}</p>
     </ion-label>
-    <ion-label text-wrap *ngIf="expanded | async">
+    <ion-label text-wrap *ngIf="expanded">
       <div style="display: inline" [innerHTML]="amiibo.description"></div>
     </ion-label>
   </ion-label>

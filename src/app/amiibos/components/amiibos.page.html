@@ -9,14 +9,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-list>
-    <app-amiibo-item
-      *ngFor="let amiibo of collectedAmiibos$ | async; trackBy: getAmiiboId"
-      [amiibo]="amiibo"
-      (collectedChanged)="toggleAmiibo(amiibo.slug, $event)"
-    >
-    </app-amiibo-item>
-  </ion-list>
+  <app-amiibos-list [amiibos]="collectedAmiibos$ | async"></app-amiibos-list>
 </ion-content>
 <ion-footer>
   <ion-toolbar>

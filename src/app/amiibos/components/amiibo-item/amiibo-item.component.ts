@@ -1,6 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AmiiboModel } from '../../services/AmiiboModel';
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-amiibo-item',
@@ -12,16 +11,20 @@ export class AmiiboItemComponent {
   @Input()
   public amiibo: AmiiboModel;
 
+  @Input()
+  public expanded: boolean = false;
+
+  @Output()
+  public click: EventEmitter<void> = new EventEmitter();
+
   @Output()
   public collectedChanged: EventEmitter<boolean> = new EventEmitter();
 
-  private expanded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-
-  private onClick(): void {
-    this.expanded.next(!this.expanded.value);
+  public onClick(): void {
+    this.click.next();
   }
 
-  private onCollectedChanged(collected: boolean): void {
+  public onCollectedChanged(collected: boolean): void {
     this.collectedChanged.next(collected);
   }
 

@@ -1,0 +1,9 @@
+<ion-list>
+  <app-amiibo-item
+    *ngFor="let amiibo of amiibos; trackBy: getAmiiboId"
+    [amiibo]="amiibo"
+    [expanded]="isSelected(amiibo.slug)"
+    (click)="onItemClick(amiibo.slug)"
+  >
+  </app-amiibo-item>
+</ion-list>
