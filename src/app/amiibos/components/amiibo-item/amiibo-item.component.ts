@@ -13,6 +13,9 @@ export class AmiiboItemComponent {
   public amiibo: AmiiboModel;
 
   @Input()
+  public collected = false;
+
+  @Input()
   public expanded = false;
 
   @Output()

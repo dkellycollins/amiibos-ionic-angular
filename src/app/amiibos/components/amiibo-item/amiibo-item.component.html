@@ -11,5 +11,5 @@
       <div style="display: inline" [innerHTML]="amiibo.description"></div>
     </ion-label>
   </ion-label>
-  <ion-toggle [checked]="amiibo.isCollected" (ionChange)="onCollectedChanged($event)"></ion-toggle>
+  <ion-toggle [checked]="collected" (ionChange)="onCollectedChanged($event)"></ion-toggle>
 </ion-item>

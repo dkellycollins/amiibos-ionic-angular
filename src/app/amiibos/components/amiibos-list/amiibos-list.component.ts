@@ -10,7 +10,7 @@ import { debounce } from 'lodash';
 export class AmiibosListComponent {
 
   @Input()
-  public amiibos: Array<AmiiboModel>;
+  public amiibos?: Array<AmiiboModel & { isCollected: boolean }>;
 
   @Output()
   public collectedChanged: EventEmitter<{ slug: string, collected: boolean }> = new EventEmitter();
