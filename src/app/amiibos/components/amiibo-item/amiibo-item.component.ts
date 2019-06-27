@@ -13,7 +13,7 @@ export class AmiiboItemComponent {
   public amiibo: AmiiboModel;
 
   @Input()
-  public expanded: boolean = false;
+  public expanded = false;
 
   @Output()
   public click: EventEmitter<void> = new EventEmitter();

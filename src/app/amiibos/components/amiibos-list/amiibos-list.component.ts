@@ -17,13 +17,13 @@ export class AmiibosListComponent {
 
   private selectedAmiibo: string | null = null;
 
-  public isSelected(slug: string): boolean {
-    return this.selectedAmiibo === slug;
-  }
-
   public onItemClick = debounce((slug: string): void => {
     this.selectedAmiibo = this.selectedAmiibo === slug ? null : slug;
   }, 100);
+
+  public isSelected(slug: string): boolean {
+    return this.selectedAmiibo === slug;
+  }
 
   public onCollectedChanged(slug: string, collected: boolean): void {
     this.collectedChanged.next({ slug, collected });
