@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AmiibosPage } from './components/amiibos.page';
 import { SelectSeriesModalComponent } from './components/select-series-modal.component';
+import { AmiiboItemComponent } from './components/amiibo-item/amiibo-item.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
   ],
   declarations: [
     AmiibosPage,
+    AmiiboItemComponent,
     SelectSeriesModalComponent
   ],
   entryComponents: [SelectSeriesModalComponent]

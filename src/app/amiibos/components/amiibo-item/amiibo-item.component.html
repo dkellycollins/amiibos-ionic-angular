@@ -1,0 +1,15 @@
+<ion-item button="true" detail="false" lines="full" (click)="onClick()">
+  <ion-thumbnail slot="start">
+    <ion-img [src]="amiibo.figureUrl"></ion-img>
+  </ion-thumbnail>
+  <ion-label>
+    <ion-label>
+      <h4>{{amiibo.name}}</h4>
+      <p>{{amiibo.series}}</p>
+    </ion-label>
+    <ion-label text-wrap *ngIf="expanded | async">
+      <div style="display: inline" [innerHTML]="amiibo.description"></div>
+    </ion-label>
+  </ion-label>
+  <ion-toggle [checked]="amiibo.isCollected" (ionChange)="onCollectedChanged($event)"></ion-toggle>
+</ion-item>
