@@ -52,10 +52,6 @@ export class AmiibosPage implements OnInit {
     );
   }
 
-  public getAmiiboId(amiibo: AmiiboModel): string {
-    return amiibo.slug;
-  }
-
   public async selectSeries(): Promise<void> {
     const modal = await this.modalController.create({
       component: SelectSeriesModalComponent
@@ -66,7 +62,7 @@ export class AmiibosPage implements OnInit {
     this.selectedSeries$.next(data);
   }
 
-  public toggleAmiibo(slug: string, $event: CustomEvent<ToggleChangeEventDetail>): void {
-    this.userAmiibosService.toggleAmiibo(slug, $event.detail.checked);
+  public toggleAmiibo({ slug, collected }: { slug: string, collected: boolean }): void {
+    this.userAmiibosService.toggleAmiibo(slug, collected);
   }
 }

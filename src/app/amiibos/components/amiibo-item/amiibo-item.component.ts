@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { AmiiboModel } from '../../services/AmiiboModel';
+import { ToggleChangeEventDetail } from '@ionic/core';
 
 @Component({
   selector: 'app-amiibo-item',
@@ -24,8 +25,7 @@ export class AmiiboItemComponent {
     this.click.next();
   }
 
-  public onCollectedChanged(collected: boolean): void {
-    this.collectedChanged.next(collected);
+  public onCollectedChanged($event: CustomEvent<ToggleChangeEventDetail>): void {
+    this.collectedChanged.next($event.detail.checked);
   }
-
 }

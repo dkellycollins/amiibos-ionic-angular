@@ -9,7 +9,11 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <app-amiibos-list [amiibos]="collectedAmiibos$ | async"></app-amiibos-list>
+  <app-amiibos-list 
+    [amiibos]="collectedAmiibos$ | async"
+    (collectedChanged)="toggleAmiibo($event)"
+  >
+  </app-amiibos-list>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
