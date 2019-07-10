@@ -6,6 +6,7 @@ import { AmiibosPage } from './components/amiibos.page';
 import { SelectSeriesModalComponent } from './components/select-series-modal.component';
 import { AmiiboItemComponent } from './components/amiibo-item/amiibo-item.component';
 import { AmiibosListComponent } from './components/amiibos-list/amiibos-list.component';
+import { ProgressToolbarComponent } from './components/progress-toolbar/progress-toolbar.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
   declarations: [
     AmiiboItemComponent,
     AmiibosListComponent,
+    ProgressToolbarComponent,
     AmiibosPage,
     SelectSeriesModalComponent
   ],

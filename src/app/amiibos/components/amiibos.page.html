@@ -16,8 +16,9 @@
   </app-amiibos-list>
 </ion-content>
 <ion-footer>
-  <ion-toolbar>
-    <p>Collected {{collectedAmiibosCount$ | async}} out of {{amiibosLength$ | async}}</p>
-    <ion-progress-bar color="success" [value]="progress$ | async"></ion-progress-bar>
-  </ion-toolbar>
+  <app-progress-toolbar
+    [count]="collectedAmiibosCount$ | async"
+    [total]="amiibosLength$ | async"
+  >
+  </app-progress-toolbar>
 </ion-footer>
