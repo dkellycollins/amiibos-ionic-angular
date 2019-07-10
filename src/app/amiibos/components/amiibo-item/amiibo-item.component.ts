@@ -19,14 +19,7 @@ export class AmiiboItemComponent {
   public expanded = false;
 
   @Output()
-  public click: EventEmitter<void> = new EventEmitter();
-
-  @Output()
   public collectedChanged: EventEmitter<boolean> = new EventEmitter();
-
-  public onClick(): void {
-    this.click.next();
-  }
 
   public onCollectedChanged($event: CustomEvent<ToggleChangeEventDetail>): void {
     this.collectedChanged.next($event.detail.checked);

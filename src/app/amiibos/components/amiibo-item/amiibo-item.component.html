@@ -1,4 +1,4 @@
-<ion-item button="true" detail="false" lines="full" (click)="onClick()">
+<ion-item button="true" details="false" lines="full">
   <ion-thumbnail slot="start">
     <ion-img [src]="amiibo.figureUrl"></ion-img>
   </ion-thumbnail>
@@ -11,5 +11,10 @@
       <div style="display: inline" [innerHTML]="amiibo.description"></div>
     </ion-label>
   </ion-label>
-  <ion-toggle [checked]="collected" (ionChange)="onCollectedChanged($event)"></ion-toggle>
+  <ion-toggle 
+    slot="end" 
+    [checked]="collected" 
+    (ionChange)="onCollectedChanged($event)"
+  >
+  </ion-toggle>
 </ion-item>
