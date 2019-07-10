@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { skip, map } from 'rxjs/operators';
+import { map, skip } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class UserAmiibosService {
 
   public getCollectedAmiibos(): Observable<Array<string>> {
     return this.collectedAmiibos$.pipe(
-      map(collectedAmiibos => Object.entries(collectedAmiibos).filter(([_, collected]) => collected).map(([map]) => map)),
+      map(collectedAmiibos => Object.entries(collectedAmiibos).filter(([_, collected]) => collected).map(([m]) => m)),
     );
   }
 

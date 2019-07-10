@@ -1,6 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { AmiiboModel } from '../../services/AmiiboModel';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ToggleChangeEventDetail } from '@ionic/core';
+import { AmiiboModel } from '../../services/AmiiboModel';
 
 @Component({
   selector: 'app-amiibo-item',

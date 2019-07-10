@@ -1,12 +1,14 @@
 Features:
+ - Enable/Disable groups/series in a collection
+ - Support multiple collections
+ - Sign In / Sign Out
+ - Integrate with Cognito
+ - Add support for sharing collections
  - Setup e2e testing with Cypress.
- - Prompt user to sign in through Cognito.
  - Publish application to Play Store with capacitor.
- - Host serverless api to retrieve amiibos data from.
+ - Host serverless api to manage data across devices.
  - Host images.
- - Save collections to api.
 
 Cleanup:
- - Address vulnerability.
  - Add notifications when build fails. 
  - Clean up build artifacts.

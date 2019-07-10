@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AmiibosService } from '../services/amiibos.service';
 import { ModalController } from '@ionic/angular';
+import { AmiibosService } from '../services/amiibos.service';
 
 @Component({
   templateUrl: './select-series-modal.component.html',

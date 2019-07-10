@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AmiibosService } from '../services/amiibos.service';
 import { ModalController } from '@ionic/angular';
-import { AmiiboModel } from '../services/AmiiboModel';
-import { SelectSeriesModalComponent } from './select-series-modal.component';
-import { UserAmiibosService } from '../services/user-amiibos.service';
 import { ToggleChangeEventDetail } from '@ionic/core';
-import { Observable, Subject, BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
+import { AmiiboModel } from '../services/AmiiboModel';
+import { AmiibosService } from '../services/amiibos.service';
+import { UserAmiibosService } from '../services/user-amiibos.service';
+import { SelectSeriesModalComponent } from './select-series-modal.component';
 
 @Component({
   selector: 'app-amiibos',
