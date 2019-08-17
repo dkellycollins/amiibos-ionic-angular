@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: 'amiibos', loadChildren: './amiibos/amiibos.module#AmiibosPageModule' },
+  { path: 'amiibos', loadChildren: () => import('./amiibos/amiibos.module').then(m => m.AmiibosPageModule) },
   { path: '**', redirectTo: 'amiibos' },
 ];
 

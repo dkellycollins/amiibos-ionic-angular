@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import * as amiibosData from '../../../assets/lineup.model.json';
+import amiibosData from '../../../assets/lineup.model.json';
 import { AmiiboModel } from './AmiiboModel.js';
 
 @Injectable({
