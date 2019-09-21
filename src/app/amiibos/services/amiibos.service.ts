@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
-import { AmiiboModel } from './AmiiboModel.js';
+import { AmiiboModel } from './AmiiboModel';
 import { AngularFirestore, AngularFirestoreCollection, QueryFn } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AmiibosService {
 
   constructor(private readonly database: AngularFirestore) { }
