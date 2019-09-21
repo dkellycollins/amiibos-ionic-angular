@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AmiiboModel } from './AmiiboModel';
 import { AngularFirestore, AngularFirestoreCollection, QueryFn } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class AmiibosService {
@@ -23,8 +23,7 @@ export class AmiibosService {
           .filter((series: string | null): series is string => !!series)
           .filter((value, index, self) => self.indexOf(value) === index)
           .sort()
-        ),
-        tap(() => console.log('Amiibos Series'))
+        )
       );
   }
 
@@ -34,7 +33,7 @@ export class AmiibosService {
    * @returns All available amiibos.
    */
   public getAmiibos(): Observable<Array<AmiiboModel>> {
-    return this.getCollection().valueChanges().pipe(tap(() => console.log('Amiibos')));
+    return this.getCollection().valueChanges();
   }
 
   /**
@@ -45,7 +44,7 @@ export class AmiibosService {
    */
   public getAmiibosBySeries(series: string): Observable<Array<AmiiboModel>> {
     const query: QueryFn = ref => ref.where('series', '==', series);
-    return this.getCollection(query).valueChanges().pipe(tap(() => console.log(`Amiibos By ${series}`)));
+    return this.getCollection(query).valueChanges();
   }
 
   /**
@@ -55,7 +54,7 @@ export class AmiibosService {
    * @returns The matching Amiibo.
    */
   public getAmiiboBySlug(slug: string): Observable<AmiiboModel> {
-    return this.getCollection().doc<AmiiboModel>(slug).valueChanges().pipe(tap(() => console.log(`Amiibo ${slug}`)));
+    return this.getCollection().doc<AmiiboModel>(slug).valueChanges();
   }
 
   private getCollection(query?: QueryFn): AngularFirestoreCollection<AmiiboModel> {
