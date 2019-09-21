@@ -7,8 +7,8 @@ import { environment } from '../environments/environment';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { AuthService, UserModel } from './auth/services/auth.service';
+import { AuthService } from './auth/services/auth.service';
+import { UserModel } from './auth/services/UserModel';
 
 @Component({
   selector: 'app-root',
