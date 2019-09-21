@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { AmiibosService } from '../services/amiibos.service';
+import { Observable } from 'rxjs';
 
 @Component({
   templateUrl: './select-series-modal.component.html',
 })
 export class SelectSeriesModalComponent implements OnInit {
 
-  public series: Array<string> = [];
+  public series$: Observable<Array<string>>;
 
   public constructor(
     private readonly amiibosService: AmiibosService,
@@ -15,7 +16,7 @@ export class SelectSeriesModalComponent implements OnInit {
   ) { }
 
   public ngOnInit() {
-    this.series = this.amiibosService.getAmiiboSeries();
+    this.series$ = this.amiibosService.getAmiiboSeries();
   }
 
   public select(series: string): void {

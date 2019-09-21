@@ -8,6 +8,8 @@ import { AmiibosListComponent } from './components/amiibos-list/amiibos-list.com
 import { AmiibosPage } from './components/amiibos.page';
 import { ProgressToolbarComponent } from './components/progress-toolbar/progress-toolbar.component';
 import { SelectSeriesModalComponent } from './components/select-series-modal.component';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AmiibosService } from './services/amiibos.service';
 
 const routes: Routes = [
   {
@@ -21,7 +23,8 @@ const routes: Routes = [
     CommonModule,
     IonicModule,
     ProgressBarModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    AngularFirestoreModule
   ],
   declarations: [
     AmiiboItemComponent,
@@ -29,6 +32,9 @@ const routes: Routes = [
     ProgressToolbarComponent,
     AmiibosPage,
     SelectSeriesModalComponent
+  ],
+  providers: [
+    AmiibosService
   ],
   entryComponents: [
     SelectSeriesModalComponent

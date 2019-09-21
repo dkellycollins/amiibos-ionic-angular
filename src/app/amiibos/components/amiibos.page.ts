@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { ToggleChangeEventDetail } from '@ionic/core';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
-import { filter, map, shareReplay } from 'rxjs/operators';
+import { filter, map, shareReplay, switchMap } from 'rxjs/operators';
 import { AmiiboModel } from '../services/AmiiboModel';
 import { AmiibosService } from '../services/amiibos.service';
 import { UserAmiibosService } from '../services/user-amiibos.service';
@@ -31,7 +30,7 @@ export class AmiibosPage implements OnInit {
   public ngOnInit() {
     this.amiibos$ = this.selectedSeries$.pipe(
       filter(series => !!series),
-      map(series => series === 'All Amiibos' ? this.amiibosService.getAmiibos() : this.amiibosService.getAmiibosBySeries(series)),
+      switchMap(series => series === 'All Amiibos' ? this.amiibosService.getAmiibos() : this.amiibosService.getAmiibosBySeries(series)),
       shareReplay(1),
     );
 
