@@ -9,7 +9,7 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAuthModule
+    AuthModule
   ],
   declarations: [AppComponent],
   entryComponents: [],
