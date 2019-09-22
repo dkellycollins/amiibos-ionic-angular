@@ -18,20 +18,30 @@ export class UserAmiibosService {
     
   }
 
+  /**
+   * Returns an Observable that emits the list of collected Amiibos.
+   */
   public getCollectedAmiibos(): Observable<Array<string>> {
     return this.user$
       .pipe(
         switchMap(user => !user ? this.localStorage$ : this.getFromFirestore(user)),
-        tap(console.log),
         map(userAmiibos => userAmiibos.filter(userAmiibo => userAmiibo.isCollected).map(userAmiibo => userAmiibo.amiiboSlug))
       );
   }
 
+  /**
+   * Sets the collected status for the specified Amiibo.
+   * 
+   * @param slug - The unique id of the Amiibo.
+   * @param collected - True of the Amiibo has been collected, False otherwise.
+   * 
+   * @returns - A promise that is resolved once the action is complete.
+   */
   public async toggleAmiibo(slug: string, collected: boolean): Promise<void> {
     const user = this.user$.getValue();
     if (!!user) {
       await this.userAmiiboCollection
-        .doc(`${slug}:${user.uid}`)
+        .doc<UserAmiiboModel>(`${slug}:${user.uid}`)
         .set({
           userUid: user.uid,
           amiiboSlug: slug,
