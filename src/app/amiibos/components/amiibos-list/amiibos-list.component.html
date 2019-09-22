@@ -3,8 +3,6 @@
     *ngFor="let amiibo of amiibos; trackBy: getAmiiboId"
     [amiibo]="amiibo"
     [collected]="amiibo.isCollected"
-    [expanded]="isSelected(amiibo.slug)"
-    (click)="onItemClick(amiibo.slug)"
     (collectedChanged)="onCollectedChanged(amiibo.slug, $event)"
   >
   </app-amiibo-item>

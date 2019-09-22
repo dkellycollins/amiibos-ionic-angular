@@ -15,6 +15,7 @@ export class AmiibosListComponent {
   @Output()
   public collectedChanged: EventEmitter<{ slug: string, collected: boolean }> = new EventEmitter();
 
+  /*
   private selectedAmiibo: string | null = null;
 
   public onItemClick = debounce((slug: string): void => {
@@ -24,6 +25,7 @@ export class AmiibosListComponent {
   public isSelected(slug: string): boolean {
     return this.selectedAmiibo === slug;
   }
+  */
 
   public onCollectedChanged(slug: string, collected: boolean): void {
     this.collectedChanged.next({ slug, collected });
