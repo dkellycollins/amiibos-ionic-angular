@@ -1,39 +1,79 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, skip } from 'rxjs/operators';
-
-export interface UserAmiibo {
-  userUid?: string;
-  amiiboSlug: string;
-  isCollected: boolean;
-}
+import { map, skip, switchMap, tap } from 'rxjs/operators';
+import { AngularFirestore, AngularFirestoreCollection, QueryFn } from '@angular/fire/firestore';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { UserModel } from 'src/app/auth/services/UserModel';
+import { UserAmiiboModel } from './UserAmiiboModel';
 
 @Injectable()
 export class UserAmiibosService {
 
   private static readonly localStorageKey = 'UserAmiibosService.userAmiibos';
 
-  private readonly collectedAmiibos$: BehaviorSubject<Array<UserAmiibo>>;
-
-  public constructor() {
-    this.collectedAmiibos$ = new BehaviorSubject<Array<UserAmiibo>>(this.load());
-    this.collectedAmiibos$.pipe(skip(1)).subscribe(this.save.bind(this));
+  public constructor(
+    private readonly database: AngularFirestore,
+    private readonly authService: AuthService
+  ) {
+    
   }
 
   public getCollectedAmiibos(): Observable<Array<string>> {
-    return this.collectedAmiibos$.pipe(
-      map(userAmiibos => userAmiibos.filter(userAmiibo => userAmiibo.isCollected).map(userAmiibo => userAmiibo.amiiboSlug))
-    );
+    return this.user$
+      .pipe(
+        switchMap(user => !user ? this.localStorage$ : this.getFromFirestore(user)),
+        tap(console.log),
+        map(userAmiibos => userAmiibos.filter(userAmiibo => userAmiibo.isCollected).map(userAmiibo => userAmiibo.amiiboSlug))
+      );
   }
 
-  public toggleAmiibo(slug: string, collected: boolean) {
-    this.collectedAmiibos$.next([
-      ...this.collectedAmiibos$.getValue().filter(userAmiibo => userAmiibo.amiiboSlug !== slug),
-      { amiiboSlug: slug, isCollected: collected }
-    ]);
+  public async toggleAmiibo(slug: string, collected: boolean): Promise<void> {
+    const user = this.user$.getValue();
+    if (!!user) {
+      await this.userAmiiboCollection
+        .doc(`${slug}:${user.uid}`)
+        .set({
+          userUid: user.uid,
+          amiiboSlug: slug,
+          isCollected: collected
+        });
+    }
+    else {
+      this.localStorage$.next([
+        ...this.localStorage$.getValue().filter(userAmiibo => userAmiibo.amiiboSlug !== slug),
+        { amiiboSlug: slug, isCollected: collected }
+      ]);
+    }
   }
 
-  private save(collectedAmiibos: Array<UserAmiibo>) {
+  private _localStorage$?: BehaviorSubject<Array<UserAmiiboModel>>;
+  private get localStorage$(): BehaviorSubject<Array<UserAmiiboModel>> {
+    if (!this._localStorage$) {
+      this._localStorage$ = new BehaviorSubject<Array<UserAmiiboModel>>(this.load());
+      this._localStorage$.pipe(skip(1)).subscribe(this.save.bind(this));
+    }
+    return this._localStorage$;
+  }
+
+  private _user$?: BehaviorSubject<UserModel | undefined>;
+  private get user$(): BehaviorSubject<UserModel | undefined> {
+    if (!this._user$) {
+      this._user$ = new BehaviorSubject<UserModel | undefined>(undefined);
+      this.authService.getUser().subscribe(this._user$);
+    }
+    return this._user$;
+  }
+
+  private get userAmiiboCollection(): AngularFirestoreCollection<UserAmiiboModel> {
+    return this.database.collection('user-amiibos');
+  }
+
+  private getFromFirestore(user: UserModel): Observable<Array<UserAmiiboModel>> {
+    const query: QueryFn = ref => ref.where('userUid', '==', user.uid);
+    return this.database.collection<UserAmiiboModel>('user-amiibos', query).valueChanges()
+  }
+
+  private save(collectedAmiibos: Array<UserAmiiboModel>) {
     try {
       localStorage.setItem(UserAmiibosService.localStorageKey, JSON.stringify(collectedAmiibos));
     } catch (error) {
@@ -41,7 +81,7 @@ export class UserAmiibosService {
     }
   }
 
-  private load(): Array<UserAmiibo> {
+  private load(): Array<UserAmiiboModel> {
     try {
       const data = localStorage.getItem(UserAmiibosService.localStorageKey);
 
