@@ -10,6 +10,7 @@ import { SelectSeriesModalComponent } from './components/select-series-modal.com
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AmiibosService } from './services/amiibos.service';
 import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
+import { UserAmiibosService } from './services/user-amiibos.service';
 
 const routes: Routes = [
   {
@@ -34,7 +35,8 @@ const routes: Routes = [
     ProgressBarComponent
   ],
   providers: [
-    AmiibosService
+    AmiibosService,
+    UserAmiibosService
   ],
   entryComponents: [
     SelectSeriesModalComponent
