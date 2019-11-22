@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User, auth } from 'firebase';
 import { UserModel } from './UserModel';
-import { cfaSignIn, cfaSignOut, cfaSignInGoogle } from 'capacitor-firebase-auth';
+import { cfaSignIn, cfaSignOut, cfaSignInGoogle } from 'capacitor-firebase-auth/alternative';
 import { Platform } from '@ionic/angular';
 
 @Injectable()
@@ -31,7 +31,8 @@ export class AuthService {
    */
   public async login(): Promise<void> {
     if (this.platform.is('android')) {
-      await cfaSignInGoogle().toPromise();
+      const { userCredential } = await cfaSignInGoogle().toPromise();
+      await this.fireAuth.auth.signInWithCredential(userCredential.credential);
     }
     else {
       await this.fireAuth.auth.signInWithRedirect(new auth.GoogleAuthProvider())
