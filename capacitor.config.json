@@ -1,7 +1,17 @@
 {
-  "appId": "io.ionic.starter",
+  "appId": "com.dkellycollins.amiibos_ionic_angular",
   "appName": "amiibos-ionic-angular",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "CapacitorFirebaseAuth": {
+      "providers": ["google.com"],
+      "languageCode": "en",
+      "nativeAuth": false,
+      "permissions": {
+        "google": ["profile"]
+      }
+    }
+  }
 }

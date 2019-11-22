@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "247074249215",
+    "firebase_url": "https://amiibos-firebase.firebaseio.com",
+    "project_id": "amiibos-firebase",
+    "storage_bucket": "amiibos-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:247074249215:android:62baea0e5ec18779daafca",
+        "android_client_info": {
+          "package_name": "com.dkellycollins.amiibos_ionic_angular"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "247074249215-fs1ktiugvpr9tu7k4eg1v4e1fg61qbr4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dkellycollins.amiibos_ionic_angular",
+            "certificate_hash": "fafd5632fe8aa9d8144e6f55a3109d8f3d2f9129"
+          }
+        },
+        {
+          "client_id": "247074249215-0a1dmc2brtkfjbmdckt822m5s6bfbund.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtf5FDfTRCd1hiztuJiV9TixqLOq-_nSg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "247074249215-0a1dmc2brtkfjbmdckt822m5s6bfbund.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
