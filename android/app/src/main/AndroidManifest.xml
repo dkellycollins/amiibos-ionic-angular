@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.dkellycollins.amiibosIonicAngular">
+    package="com.dkellycollins.amiibos_ionic_angular">
 
     <application
         android:allowBackup="true"
@@ -12,9 +12,10 @@
 
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale"
-            android:name="io.dkellycollins.amiibosIonicAngular.MainActivity"
+            android:name="com.dkellycollins.amiibos_ionic_angular.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBarLaunch">
+            android:theme="@style/AppTheme.NoActionBarLaunch"
+            android:launchMode="singleTask">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

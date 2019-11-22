@@ -1,8 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Amiibos Tracker</string>
-    <string name="title_activity_main">Amiibos Tracker</string>
-    <string name="package_name">io.dkellycollins.amiibosIonicAngular</string>
-    <string name="fileprovider_authority">io.dkellycollins.amiibosIonicAngular.fileprovider</string>
-    <string name="custom_url_scheme">io.dkellycollins.amiibosIonicAngular</string>
+    <string name="app_name">amiibos-ionic-angular</string>
+    <string name="title_activity_main">amiibos-ionic-angular</string>
+    <string name="package_name">com.dkellycollins.amiibos_ionic_angular</string>
+    <string name="custom_url_scheme">com.dkellycollins.amiibos_ionic_angular</string>
 </resources>

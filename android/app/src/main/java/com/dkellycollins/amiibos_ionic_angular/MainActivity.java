@@ -1,4 +1,4 @@
-package io.dkellycollins.amiibosIonicAngular;
+package com.dkellycollins.amiibos_ionic_angular;
 
 import android.os.Bundle;
 
