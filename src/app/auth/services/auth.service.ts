@@ -34,7 +34,7 @@ export class AuthService {
       await cfaSignInGoogle().toPromise();
     }
     else {
-      await this.fireAuth.auth.signInWithRedirect(new auth.GoogleAuthProvider())
+      await this.fireAuth.signInWithRedirect(new auth.GoogleAuthProvider());
     }
     
   }
@@ -47,7 +47,7 @@ export class AuthService {
       await cfaSignOut().toPromise();
     }
     else {
-      await this.fireAuth.auth.signOut();
+      await this.fireAuth.signOut();
     }
   }
 
