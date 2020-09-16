@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, skip, switchMap, tap } from 'rxjs/operators';
+import { map, skip, switchMap } from 'rxjs/operators';
 import { AngularFirestore, AngularFirestoreCollection, QueryFn } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { UserModel } from 'src/app/auth/services/UserModel';
-import { UserAmiiboModel } from './UserAmiiboModel';
+import { UserAmiiboModel } from '../models/user-amiibo.model';
 
 @Injectable()
 export class UserAmiibosService {

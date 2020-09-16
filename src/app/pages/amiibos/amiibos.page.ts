@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Select, Store } from '@ngxs/store';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AmiiboModel } from '../../amiibos/services/AmiiboModel';
-import { UserAmiibosService } from '../../amiibos/services/user-amiibos.service';
 import { SelectSeriesModalService } from 'src/app/amiibos/components/select-series-modal/select-series-modal.service';
-import { Select, Store } from '@ngxs/store';
-import { AmiibosState } from 'src/app/amiibos/state/amiibos.state';
 import { AmiibosActions } from 'src/app/amiibos/state/amiibos.actions';
+import { AmiibosState } from 'src/app/amiibos/state/amiibos.state';
+import { AmiiboModel } from '../../amiibos/models/amiibo.model';
+import { UserAmiibosService } from '../../amiibos/services/user-amiibos.service';
 
 @Component({
   selector: 'app-amiibos',
@@ -32,7 +32,7 @@ export class AmiibosPage implements OnInit {
   ) { }
 
   public ngOnInit() {
-    this.collectedAmiibos$ = combineLatest(this.amiibos$, this.userAmiibosService.getCollectedAmiibos()).pipe(
+    this.collectedAmiibos$ = combineLatest([this.amiibos$, this.userAmiibosService.getCollectedAmiibos()]).pipe(
       map(([amiibos, collectedAmiibos]) => amiibos.map(amiibo => ({ ...amiibo, isCollected: collectedAmiibos.indexOf(amiibo.slug) >= 0}))),
     );
 
@@ -44,7 +44,7 @@ export class AmiibosPage implements OnInit {
       map(collectedAmiibos => collectedAmiibos.filter(amiibo => amiibo.isCollected).length),
     );
 
-    this.progress$ = combineLatest(this.amiibosLength$, this.collectedAmiibosCount$).pipe(
+    this.progress$ = combineLatest([this.amiibosLength$, this.collectedAmiibosCount$]).pipe(
       map(([amiibosLength, collectedAmiibosCount]) => amiibosLength === 0 ? 0 : collectedAmiibosCount / amiibosLength),
     );
 

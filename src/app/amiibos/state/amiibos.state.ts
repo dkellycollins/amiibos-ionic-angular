@@ -5,7 +5,7 @@ import {
   StreamEmitted,
 } from "@ngxs-labs/firestore-plugin";
 import { Action, NgxsOnInit, Selector, State, StateContext } from "@ngxs/store";
-import { AmiiboModel } from "../services/AmiiboModel";
+import { AmiiboModel } from "../models/amiibo.model";
 import { AmiibosFirestore } from "../services/amiibos.firestore";
 import { AmiibosActions } from "./amiibos.actions";
 
