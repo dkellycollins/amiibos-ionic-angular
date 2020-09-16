@@ -28,6 +28,15 @@ export class AmiibosState implements NgxsOnInit {
     return state.allAmiibos;
   }
 
+  @Selector([AmiibosState.allAmiibos])
+  public static series(amiibos: Array<AmiiboModel>): Array<String> {
+    return amiibos
+      .map(amiibo => amiibo.series)
+      .filter((series: string | null): series is string => !!series)
+      .filter((value, index, self) => self.indexOf(value) === index)
+      .sort();
+  }
+
   @Selector([AmiibosState])
   public static selectedSeries(state: AmiibosStateModel): string {
     return state.selectedSeries;

@@ -5,7 +5,6 @@ import { AmiiboItemComponent } from './components/amiibo-item/amiibo-item.compon
 import { AmiibosListComponent } from './components/amiibos-list/amiibos-list.component';
 import { SelectSeriesModalComponent } from './components/select-series-modal/select-series-modal.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AmiibosService } from './services/amiibos.service';
 import { UserAmiibosService } from './services/user-amiibos.service';
 import { SelectSeriesModalService } from './components/select-series-modal/select-series-modal.service';
 import { NgxsModule } from '@ngxs/store';
@@ -32,7 +31,6 @@ import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin';
     SelectSeriesModalComponent
   ],
   providers: [
-    AmiibosService,
     UserAmiibosService,
     SelectSeriesModalService,
     AmiibosFirestore

@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
-import { filter, map, shareReplay, switchMap } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AmiiboModel } from '../../amiibos/services/AmiiboModel';
-import { AmiibosService } from '../../amiibos/services/amiibos.service';
 import { UserAmiibosService } from '../../amiibos/services/user-amiibos.service';
-import { SelectSeriesModalComponent } from '../../amiibos/components/select-series-modal/select-series-modal.component';
 import { SelectSeriesModalService } from 'src/app/amiibos/components/select-series-modal/select-series-modal.service';
 import { Select, Store } from '@ngxs/store';
 import { AmiibosState } from 'src/app/amiibos/state/amiibos.state';
