@@ -6,6 +6,7 @@ import { AmiibosPageRoutingModule } from './amiibos-routing.module';
 import { AmiibosPage } from './amiibos.page';
 import { AmiibosModule } from '../../amiibos/amiibos.module';
 import { CoreModule } from 'src/app/core/core.module';
+import { NgxsModule } from '@ngxs/store';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { CoreModule } from 'src/app/core/core.module';
     IonicModule,
     AmiibosPageRoutingModule,
     AmiibosModule,
-    CoreModule
+    CoreModule,
+    NgxsModule
   ],
   declarations: [AmiibosPage]
 })

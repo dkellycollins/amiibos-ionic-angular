@@ -8,12 +8,18 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AmiibosService } from './services/amiibos.service';
 import { UserAmiibosService } from './services/user-amiibos.service';
 import { SelectSeriesModalService } from './components/select-series-modal/select-series-modal.service';
+import { NgxsModule } from '@ngxs/store';
+import { AmiibosState } from './state/amiibos.state';
+import { AmiibosFirestore } from './services/amiibos.firestore';
+import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgxsModule.forFeature([AmiibosState]),
+    NgxsFirestoreModule
   ],
   declarations: [
     AmiiboItemComponent,
@@ -28,7 +34,8 @@ import { SelectSeriesModalService } from './components/select-series-modal/selec
   providers: [
     AmiibosService,
     UserAmiibosService,
-    SelectSeriesModalService
+    SelectSeriesModalService,
+    AmiibosFirestore
   ],
   entryComponents: [
     SelectSeriesModalComponent
