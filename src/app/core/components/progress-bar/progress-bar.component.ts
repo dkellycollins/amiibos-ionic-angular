@@ -23,10 +23,9 @@ import { Component, Input } from '@angular/core';
           padding: 0px;
           border-radius: 20px;
   `],
-  template:
-  `
-  <div class=\"progress-outer\">
-    <div class=\"progress-inner\" [style.width]=\"whichProgress(progress) + '%'\" [style.background-color]=\"degraded == null ? color : whichColor(progress)\">
+  template: `
+    <div class="progress-outer">
+    <div class="progress-inner" [style.width]="whichProgress(progress) + '%'" [style.background-color]="degraded == null ? color : whichColor(progress)">
       {{whichDisplay(progress, progressDisplay)}}
     </div>
   </div>
@@ -75,9 +74,9 @@ export class ProgressBarComponent {
     return this.degraded[last];
   }
 
-  whichProgress(progress: string){
+  whichProgress(progress: string): string {
     try{
-      return Math.round(+progress * 100) / 100;
+      return (Math.round(+progress * 100) / 100).toString();
     }
     catch{
       return progress;

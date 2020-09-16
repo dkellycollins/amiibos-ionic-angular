@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { AmiibosService } from '../services/amiibos.service';
+import { AmiibosService } from '../../services/amiibos.service';
 import { Observable } from 'rxjs';
 
 @Component({

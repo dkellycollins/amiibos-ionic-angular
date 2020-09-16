@@ -1,45 +1,37 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { AmiiboItemComponent } from './components/amiibo-item/amiibo-item.component';
 import { AmiibosListComponent } from './components/amiibos-list/amiibos-list.component';
-import { AmiibosPage } from './components/amiibos.page';
-import { ProgressToolbarComponent } from './components/progress-toolbar/progress-toolbar.component';
-import { SelectSeriesModalComponent } from './components/select-series-modal.component';
+import { SelectSeriesModalComponent } from './components/select-series-modal/select-series-modal.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AmiibosService } from './services/amiibos.service';
-import { ProgressBarComponent } from './components/progress-bar/progress-bar.component';
 import { UserAmiibosService } from './services/user-amiibos.service';
-
-const routes: Routes = [
-  {
-    path: '',
-    component: AmiibosPage
-  }
-];
+import { SelectSeriesModalService } from './components/select-series-modal/select-series-modal.service';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    RouterModule.forChild(routes),
     AngularFirestoreModule
   ],
   declarations: [
     AmiiboItemComponent,
     AmiibosListComponent,
-    ProgressToolbarComponent,
-    AmiibosPage,
-    SelectSeriesModalComponent,
-    ProgressBarComponent
+    SelectSeriesModalComponent
+  ],
+  exports: [
+    AmiiboItemComponent,
+    AmiibosListComponent,
+    SelectSeriesModalComponent
   ],
   providers: [
     AmiibosService,
-    UserAmiibosService
+    UserAmiibosService,
+    SelectSeriesModalService
   ],
   entryComponents: [
     SelectSeriesModalComponent
   ]
 })
-export class AmiibosPageModule {}
+export class AmiibosModule {}

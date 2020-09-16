@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { BehaviorSubject, combineLatest, Observable, Subject } from 'rxjs';
 import { filter, map, shareReplay, switchMap } from 'rxjs/operators';
-import { AmiiboModel } from '../services/AmiiboModel';
-import { AmiibosService } from '../services/amiibos.service';
-import { UserAmiibosService } from '../services/user-amiibos.service';
-import { SelectSeriesModalComponent } from './select-series-modal.component';
+import { AmiiboModel } from '../../amiibos/services/AmiiboModel';
+import { AmiibosService } from '../../amiibos/services/amiibos.service';
+import { UserAmiibosService } from '../../amiibos/services/user-amiibos.service';
+import { SelectSeriesModalComponent } from '../../amiibos/components/select-series-modal/select-series-modal.component';
+import { SelectSeriesModalService } from 'src/app/amiibos/components/select-series-modal/select-series-modal.service';
 
 @Component({
   selector: 'app-amiibos',
@@ -24,7 +25,7 @@ export class AmiibosPage implements OnInit {
   public constructor(
     private readonly amiibosService: AmiibosService,
     private readonly userAmiibosService: UserAmiibosService,
-    private readonly modalController: ModalController
+    private readonly selectSeriesModalService: SelectSeriesModalService
   ) { }
 
   public ngOnInit() {
@@ -52,12 +53,7 @@ export class AmiibosPage implements OnInit {
   }
 
   public async selectSeries(): Promise<void> {
-    const modal = await this.modalController.create({
-      component: SelectSeriesModalComponent
-    });
-
-    await modal.present();
-    const { data } = await modal.onDidDismiss();
+    const data = await this.selectSeriesModalService.open();
     this.selectedSeries$.next(data);
   }
 
