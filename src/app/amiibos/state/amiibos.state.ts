@@ -15,6 +15,7 @@ import { UserAmiiboModel } from '../models/user-amiibo.model';
 import { AmiibosFirestore } from "../services/amiibos.firestore";
 import { UserAmiibosFirestore } from '../services/user-amiibos.firestore';
 import { AmiibosActions } from "./amiibos.actions";
+import { keyBy } from 'lodash';
 
 export interface AmiibosStateModel {
   allAmiibos: Array<AmiiboModel>;
@@ -69,9 +70,10 @@ export class AmiibosState implements NgxsOnInit {
 
   @Selector([AmiibosState.selectedAmiibos, AmiibosState.userAmiibos])
   public static collectedAmiibos(amiibos: Array<AmiiboModel>, userAmiibos: Array<UserAmiiboModel>): Array<CollectableAmiiboModel> {
+    const userAmiiboBySlug = keyBy(userAmiibos, (userAmiibo) => userAmiibo.amiiboSlug);
     return amiibos.map(amiibo => ({
       ...amiibo,
-      isCollected: userAmiibos.some(userAmiibo => userAmiibo.amiiboSlug === amiibo.slug)
+      isCollected: !!userAmiiboBySlug[amiibo.slug] && userAmiiboBySlug[amiibo.slug].isCollected
     }));
   }
 
@@ -93,7 +95,7 @@ export class AmiibosState implements NgxsOnInit {
     });
 
     this.ngxsFirestoreConnect.connect(AuthActions.SetUser, {
-      to: (action) => this.userAmiibosFirestore.collectionByUser$(action.payload.uid)
+      to: (action: AuthActions.SetUser) => this.userAmiibosFirestore.collectionByUser$(action.payload.uid)
     });
   }
 
