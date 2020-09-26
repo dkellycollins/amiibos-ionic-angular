@@ -8,12 +8,6 @@ interface AuthStateModel {
   user?: UserModel
 }
 
-class SetUser {
-  public static readonly type = '[Auth] Set user';
-
-  constructor(public readonly payload: UserModel) { }
-}
-
 @State<AuthStateModel>({
   name: 'auth',
   defaults: {
@@ -33,7 +27,7 @@ export class AuthState implements NgxsOnInit {
   ) { }
 
   public ngxsOnInit(context: StateContext<AuthStateModel>): void {
-    this.authService.getUser().subscribe(user => context.dispatch(new SetUser(user)));
+    this.authService.getUser().subscribe(user => context.dispatch(new AuthActions.SetUser(user)));
   }
 
   @Action(AuthActions.Login)
@@ -46,8 +40,8 @@ export class AuthState implements NgxsOnInit {
     this.authService.logout();
   }
 
-  @Action(SetUser)
-  public setUser(context: StateContext<AuthStateModel>, { payload }: SetUser): void {
+  @Action(AuthActions.SetUser)
+  public setUser(context: StateContext<AuthStateModel>, { payload }: AuthActions.SetUser): void {
     context.patchState({
       user: payload
     });

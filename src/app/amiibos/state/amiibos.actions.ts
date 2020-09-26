@@ -11,4 +11,13 @@ export namespace AmiibosActions {
       public readonly series: string
     ) { }
   }
+
+  export class ToggleAmiibo {
+    public static readonly type = '[Amiibos] Toggle';
+
+    constructor(
+      public readonly amiiboSlug: string,
+      public readonly isCollected: boolean
+    ) { }
+  }
 }

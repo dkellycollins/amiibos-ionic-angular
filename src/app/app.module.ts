@@ -23,7 +23,10 @@ import { NgxsFirestoreModule } from "@ngxs-labs/firestore-plugin";
       enabled: environment.production,
     }),
     AngularFireModule.initializeApp(environment.firebase),
-    NgxsModule.forRoot([], { selectorOptions: { suppressErrors: false } }),
+    NgxsModule.forRoot([], {
+      developmentMode: !environment.production,
+      selectorOptions: { suppressErrors: false }
+    }),
     NgxsRouterPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsFirestoreModule.forRoot(),

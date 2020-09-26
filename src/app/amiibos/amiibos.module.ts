@@ -11,6 +11,7 @@ import { NgxsModule } from '@ngxs/store';
 import { AmiibosState } from './state/amiibos.state';
 import { AmiibosFirestore } from './services/amiibos.firestore';
 import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin';
+import { UserAmiibosFirestore } from './services/user-amiibos.firestore';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin';
   providers: [
     UserAmiibosService,
     SelectSeriesModalService,
-    AmiibosFirestore
+    AmiibosFirestore,
+    UserAmiibosFirestore
   ],
   entryComponents: [
     SelectSeriesModalComponent
