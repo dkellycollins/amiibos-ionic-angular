@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User, auth } from 'firebase';
-import { UserModel } from './UserModel';
+import { UserModel } from '../models/user.model';
 import { cfaSignOut, cfaSignInGoogle } from 'capacitor-firebase-auth';
 import { Platform } from '@ionic/angular';
 

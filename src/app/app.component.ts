@@ -1,21 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Platform, AlertController } from '@ionic/angular';
-import { environment } from '../environments/environment';
-import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase';
+import { AlertController, Platform } from '@ionic/angular';
+import { Select, Store } from '@ngxs/store';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth/services/auth.service';
-import { UserModel } from './auth/services/UserModel';
+import { environment } from '../environments/environment';
+import { UserModel } from './auth/models/user.model';
+import { AuthActions } from './auth/state/auth.actions';
+import { AuthState } from './auth/state/auth.state';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
+  @Select(AuthState.user)
   public user$: Observable<UserModel | undefined>;
 
   public get version(): string {
@@ -26,18 +26,14 @@ export class AppComponent implements OnInit {
     private readonly platform: Platform,
     private readonly splashScreen: SplashScreen,
     private readonly statusBar: StatusBar,
-    private readonly authService: AuthService,
-    private readonly alertController: AlertController
+    private readonly alertController: AlertController,
+    private readonly store: Store
   ) {
     this.initializeApp();
   }
 
-  public ngOnInit() {
-    this.user$ = this.authService.getUser();
-  }
-
   public login() {
-    this.authService.login();
+    this.store.dispatch(new AuthActions.Login());
   }
 
   public async logout() {
@@ -48,7 +44,7 @@ export class AppComponent implements OnInit {
         { text: 'No', role: 'cancel' },
         { text: 'Yes', handler: () => { 
           alert.dismiss(); 
-          this.authService.logout(); 
+          this.store.dispatch(new AuthActions.Logout());
         }}
       ]
     });

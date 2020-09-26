@@ -19,16 +19,17 @@ import { NgxsFirestoreModule } from "@ngxs-labs/firestore-plugin";
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule,
     ServiceWorkerModule.register("ngsw-worker.js", {
       enabled: environment.production,
     }),
     AngularFireModule.initializeApp(environment.firebase),
-    AuthModule,
     NgxsModule.forRoot([], { selectorOptions: { suppressErrors: false } }),
     NgxsRouterPluginModule.forRoot(),
     NgxsReduxDevtoolsPluginModule.forRoot(),
     NgxsFirestoreModule.forRoot(),
+
+    AppRoutingModule,
+    AuthModule,
   ],
   declarations: [AppComponent],
   entryComponents: [],
