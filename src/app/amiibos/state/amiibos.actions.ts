@@ -15,9 +15,13 @@ export namespace AmiibosActions {
   export class ToggleAmiibo {
     public static readonly type = '[Amiibos] Toggle';
 
+    public readonly source: string;
+
     constructor(
       public readonly amiiboSlug: string,
       public readonly isCollected: boolean
-    ) { }
+    ) { 
+      //this.source = arguments.callee.caller.toString();
+    }
   }
 }

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
-import { UserModel } from "../models/user.model";
+import { UserModel } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { AuthActions } from './auth.actions';
 
 interface AuthStateModel {
-  user?: UserModel
+  user?: UserModel;
 }
 
 @State<AuthStateModel>({

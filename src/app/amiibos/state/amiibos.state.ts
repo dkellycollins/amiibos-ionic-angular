@@ -2,20 +2,21 @@ import { Injectable } from '@angular/core';
 import {
   Emitted,
   NgxsFirestoreConnect,
-  StreamEmitted,
-} from "@ngxs-labs/firestore-plugin";
-import { Action, NgxsOnInit, Selector, State, StateContext, Store } from "@ngxs/store";
+  StreamEmitted
+} from '@ngxs-labs/firestore-plugin';
+import { Action, NgxsOnInit, Selector, State, StateContext, Store } from '@ngxs/store';
+import { keyBy } from 'lodash';
+import { take } from 'rxjs/operators';
 import { AuthActions } from 'src/app/auth/state/auth.actions';
 import { AuthState } from 'src/app/auth/state/auth.state';
-import { AmiibosModule } from '../amiibos.module';
-import { AmiiboModel } from "../models/amiibo.model";
+import { AmiiboModel } from '../models/amiibo.model';
 import { CollectableAmiiboModel } from '../models/collectable-amiibo.model';
 import { CollectionProgressModel } from '../models/collection-progress.model';
 import { UserAmiiboModel } from '../models/user-amiibo.model';
-import { AmiibosFirestore } from "../services/amiibos.firestore";
+import { AmiibosFirestore } from '../services/amiibos.firestore';
 import { UserAmiibosFirestore } from '../services/user-amiibos.firestore';
-import { AmiibosActions } from "./amiibos.actions";
-import { keyBy } from 'lodash';
+import { UserAmiibosLocalStorage } from '../services/user-amiibos.local-storage';
+import { AmiibosActions } from './amiibos.actions';
 
 export interface AmiibosStateModel {
   allAmiibos: Array<AmiiboModel>;
@@ -24,7 +25,7 @@ export interface AmiibosStateModel {
 }
 
 @State<AmiibosStateModel>({
-  name: "amiibos",
+  name: 'amiibos',
   defaults: {
     allAmiibos: [],
     userAmiibos: [],
@@ -86,16 +87,13 @@ export class AmiibosState implements NgxsOnInit {
     private readonly ngxsFirestoreConnect: NgxsFirestoreConnect,
     private readonly amiibosFirestore: AmiibosFirestore,
     private readonly userAmiibosFirestore: UserAmiibosFirestore,
+    private readonly userAmiibosLocalStorage: UserAmiibosLocalStorage,
     private readonly store: Store
   ) {}
 
   public ngxsOnInit(): void {
     this.ngxsFirestoreConnect.connect(AmiibosActions.LoadAmiibos, {
       to: () => this.amiibosFirestore.collection$(),
-    });
-
-    this.ngxsFirestoreConnect.connect(AuthActions.SetUser, {
-      to: (action: AuthActions.SetUser) => this.userAmiibosFirestore.collectionByUser$(action.payload.uid)
     });
   }
 
@@ -109,11 +107,28 @@ export class AmiibosState implements NgxsOnInit {
     });
   }
 
-  @Action(StreamEmitted(AuthActions.SetUser))
-  public setUserEmiited(context: StateContext<AmiibosStateModel>, { payload }: Emitted<AuthActions.SetUser, Array<UserAmiiboModel>>): void {
-    context.patchState({
-      userAmiibos: payload
-    });
+  @Action(AuthActions.SetUser)
+  public async setUser(context: StateContext<AmiibosStateModel>, action: AuthActions.SetUser): Promise<void> {
+    if (!!action.payload) {
+      const userAmiibos = await this.userAmiibosFirestore.collectionByUser$(action.payload.uid)
+        .pipe(
+          take(1)
+        )
+        .toPromise();
+      context.patchState({
+        userAmiibos: userAmiibos
+      });
+    }
+    else {
+      const userAmiibos = await this.userAmiibosLocalStorage.collection$()
+        .pipe(
+          take(1)
+        )
+        .toPromise();
+      context.patchState({
+        userAmiibos: userAmiibos
+      });
+    }
   }
 
   @Action(AmiibosActions.SelectSeries)
@@ -128,11 +143,24 @@ export class AmiibosState implements NgxsOnInit {
 
   @Action(AmiibosActions.ToggleAmiibo)
   public async toggleAmiibo(context: StateContext<AmiibosStateModel>, action: AmiibosActions.ToggleAmiibo): Promise<void> {
+    const state = context.getState();
     const user = this.store.selectSnapshot(AuthState.user);
-    await this.userAmiibosFirestore.update$(`${action.amiiboSlug}:${user.uid}`, {
-      userUid: user.uid,
-      amiiboSlug: action.amiiboSlug,
-      isCollected: action.isCollected
-    }).toPromise();
+    context.patchState({
+      userAmiibos: [
+        ...state.userAmiibos.filter(userAmiibos => userAmiibos.amiiboSlug !== action.amiiboSlug),
+        { amiiboSlug: action.amiiboSlug, isCollected: action.isCollected, userUid: !!user ? user.uid : undefined }
+      ]
+    })
+
+    if (!!user) {
+      await this.userAmiibosFirestore.update$(`${action.amiiboSlug}:${user.uid}`, {
+        userUid: user.uid,
+        amiiboSlug: action.amiiboSlug,
+        isCollected: action.isCollected
+      }).toPromise()
+    }
+    else {
+      this.userAmiibosLocalStorage.update(action.amiiboSlug, action.isCollected)
+    }
   }
 }

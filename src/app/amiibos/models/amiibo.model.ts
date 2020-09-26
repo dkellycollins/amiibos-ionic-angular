@@ -18,7 +18,7 @@ export interface AmiiboModel {
    * The name of the series the Amiibo belongs too.
    */
   series: string;
-  
+
   /**
    * The full url to the image for the Amiibo figure.
    */

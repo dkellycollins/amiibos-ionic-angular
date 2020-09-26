@@ -1,17 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin';
+import { NgxsModule } from '@ngxs/store';
 import { AmiiboItemComponent } from './components/amiibo-item/amiibo-item.component';
 import { AmiibosListComponent } from './components/amiibos-list/amiibos-list.component';
 import { SelectSeriesModalComponent } from './components/select-series-modal/select-series-modal.component';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { UserAmiibosService } from './services/user-amiibos.service';
 import { SelectSeriesModalService } from './components/select-series-modal/select-series-modal.service';
-import { NgxsModule } from '@ngxs/store';
-import { AmiibosState } from './state/amiibos.state';
 import { AmiibosFirestore } from './services/amiibos.firestore';
-import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin';
 import { UserAmiibosFirestore } from './services/user-amiibos.firestore';
+import { UserAmiibosLocalStorage } from './services/user-amiibos.local-storage';
+import { AmiibosState } from './state/amiibos.state';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { UserAmiibosFirestore } from './services/user-amiibos.firestore';
     IonicModule,
     AngularFirestoreModule,
     NgxsModule.forFeature([AmiibosState]),
-    NgxsFirestoreModule
+    NgxsFirestoreModule,
+    ReactiveFormsModule
   ],
   declarations: [
     AmiiboItemComponent,
@@ -32,10 +34,10 @@ import { UserAmiibosFirestore } from './services/user-amiibos.firestore';
     SelectSeriesModalComponent
   ],
   providers: [
-    UserAmiibosService,
     SelectSeriesModalService,
     AmiibosFirestore,
-    UserAmiibosFirestore
+    UserAmiibosFirestore,
+    UserAmiibosLocalStorage
   ],
   entryComponents: [
     SelectSeriesModalComponent

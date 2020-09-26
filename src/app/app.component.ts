@@ -42,8 +42,8 @@ export class AppComponent {
       message: 'Are you sure you want to logout?',
       buttons: [
         { text: 'No', role: 'cancel' },
-        { text: 'Yes', handler: () => { 
-          alert.dismiss(); 
+        { text: 'Yes', handler: () => {
+          alert.dismiss();
           this.store.dispatch(new AuthActions.Logout());
         }}
       ]

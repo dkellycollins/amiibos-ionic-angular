@@ -12,9 +12,8 @@
     </ion-label>
   </ion-label>
   <ion-toggle 
-    slot="end" 
-    [checked]="collected" 
-    (ionChange)="onCollectedChanged($event)"
+    slot="end"
+    [formControl]="control"
   >
   </ion-toggle>
 </ion-item>

@@ -40,6 +40,7 @@ export class AmiibosPage implements OnInit {
   }
 
   public toggleAmiibo({ slug, collected }: { slug: string, collected: boolean }): void {
+    console.log(arguments);
     this.store.dispatch(new AmiibosActions.ToggleAmiibo(slug, collected));
   }
 }

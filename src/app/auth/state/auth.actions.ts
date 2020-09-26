@@ -11,7 +11,7 @@ export namespace AuthActions {
 
   export class SetUser {
     public static readonly type = '[Auth] Set user';
-  
+
     constructor(public readonly payload: UserModel) { }
   }
 }
