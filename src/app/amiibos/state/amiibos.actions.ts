@@ -1,7 +1,22 @@
+import { UserAmiiboModel } from '../models/user-amiibo.model';
 
 export namespace AmiibosActions {
   export class LoadAmiibos {
     public static readonly type = '[Amiibos] Load';
+  }
+
+  export class LoadUserAmiibos {
+    public static readonly type = '[Amiibos] Load User Amiibos';
+
+    constructor(public readonly userUid: string) { }
+  }
+
+  export class SetUserAmiibos {
+    public static readonly type = '[Amiibos] Set User Amiibos';
+
+    constructor(
+      public readonly payload: Array<UserAmiiboModel>
+    ) { }
   }
 
   export class SelectSeries {
@@ -20,8 +35,6 @@ export namespace AmiibosActions {
     constructor(
       public readonly amiiboSlug: string,
       public readonly isCollected: boolean
-    ) { 
-      //this.source = arguments.callee.caller.toString();
-    }
+    ) { }
   }
 }

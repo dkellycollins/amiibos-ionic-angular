@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { SelectSeriesModalService } from 'src/app/amiibos/components/select-series-modal/select-series-modal.service';
 import { CollectionProgressModel } from 'src/app/amiibos/models/collection-progress.model';
 import { AmiibosActions } from 'src/app/amiibos/state/amiibos.actions';
-import { AmiibosState } from 'src/app/amiibos/state/amiibos.state';
+import { AmiibosSelectors } from 'src/app/amiibos/state/amiibos.selectors';
 import { AmiiboModel } from '../../amiibos/models/amiibo.model';
 
 @Component({
@@ -13,16 +13,16 @@ import { AmiiboModel } from '../../amiibos/models/amiibo.model';
 })
 export class AmiibosPage implements OnInit {
 
-  @Select(AmiibosState.selectedAmiibos)
+  @Select(AmiibosSelectors.selectedAmiibos)
   public readonly amiibos$: Observable<Array<AmiiboModel>>;
 
-  @Select(AmiibosState.selectedSeries)
+  @Select(AmiibosSelectors.selectedSeries)
   public readonly selectedSeries$: Observable<string>;
 
-  @Select(AmiibosState.collectedAmiibos)
+  @Select(AmiibosSelectors.collectedAmiibos)
   public readonly collectedAmiibos$: Observable<Array<AmiiboModel & { isCollected: boolean }>>;
 
-  @Select(AmiibosState.progress)
+  @Select(AmiibosSelectors.progress)
   public readonly progress$: Observable<CollectionProgressModel>;
 
   public constructor(
@@ -40,7 +40,6 @@ export class AmiibosPage implements OnInit {
   }
 
   public toggleAmiibo({ slug, collected }: { slug: string, collected: boolean }): void {
-    console.log(arguments);
     this.store.dispatch(new AmiibosActions.ToggleAmiibo(slug, collected));
   }
 }
