@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { debounce } from 'lodash';
-import { AmiiboModel } from '../../services/AmiiboModel';
+import { AmiiboModel } from '../../models/amiibo.model';
 
 @Component({
   selector: 'app-amiibos-list',

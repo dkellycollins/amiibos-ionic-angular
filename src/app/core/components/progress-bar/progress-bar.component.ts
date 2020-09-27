@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-//Modifed from https://github.com/CharlesGrimont/angular-progress-bar
+// Modifed from https://github.com/CharlesGrimont/angular-progress-bar
 
 @Component({
   selector:
@@ -34,21 +34,21 @@ import { Component, Input } from '@angular/core';
 export class ProgressBarComponent {
 
   /** Inputs **/
-  @Input('progress') progress: string;
-  @Input('progressDisplay') progressDisplay?: string;
-  @Input('color') color: string;
-  @Input('color-degraded') degraded: any;
+  @Input('progress') public progress: string;
+  @Input('progressDisplay') public progressDisplay?: string;
+  @Input('color') public color: string;
+  @Input('color-degraded') public degraded: any;
 
   constructor() {
     // Default color
-    this.color = "#488aff";
+    this.color = '#488aff';
   }
 
   /**
    * Returns a color for a certain percent
    * @param percent The current progress
    */
-  whichColor(percent: string){
+  public whichColor(percent: string){
     // Get all entries index as an array
     let k: Array<any> = Object.keys(this.degraded);
     // Convert string to number
@@ -56,17 +56,17 @@ export class ProgressBarComponent {
     // Sort them by value
     k = k.sort((a, b) => a - b);
     // Percent as number
-    let p = +percent
+    const p = +percent;
     // Set last by default as the first occurrence
     let last = k[0];
-    // Foreach keys 
-    for(let val of k){
+    // Foreach keys
+    for (const val of k){
       // if current val is < than percent
-      if(val < p){
+      if (val < p){
         last = val;
       }
       // if val >= percent then the val that we could show has been reached
-      else if(val >= p -1){
+      else if (val >= p - 1){
         return this.degraded[last];
       }
     }
@@ -74,16 +74,16 @@ export class ProgressBarComponent {
     return this.degraded[last];
   }
 
-  whichProgress(progress: string): string {
+  public whichProgress(progress: string): string {
     try{
       return (Math.round(+progress * 100) / 100).toString();
     }
-    catch{
+    catch {
       return progress;
     }
   }
 
-  whichDisplay(progress: string, progressDisplay?: string) {
+  public whichDisplay(progress: string, progressDisplay?: string) {
     return progressDisplay || `${this.whichProgress(progress)}%`;
   }
 }

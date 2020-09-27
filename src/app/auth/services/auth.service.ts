@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Platform } from '@ionic/angular';
+import { cfaSignInGoogle, cfaSignOut } from 'capacitor-firebase-auth';
+import { auth, User } from 'firebase';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User, auth } from 'firebase';
-import { UserModel } from './UserModel';
-import { cfaSignOut, cfaSignInGoogle } from 'capacitor-firebase-auth';
-import { Platform } from '@ionic/angular';
+import { UserModel } from '../models/user.model';
 
 @Injectable()
 export class AuthService {
@@ -17,7 +17,7 @@ export class AuthService {
 
   /**
    * Returns an observable with the currently authenticate User, or undefined if the user has not logged in.
-   * 
+   *
    * @returns An observable that will emit the currently authenticated User.
    */
   public getUser(): Observable<UserModel | undefined> {
@@ -36,7 +36,7 @@ export class AuthService {
     else {
       await this.fireAuth.signInWithRedirect(new auth.GoogleAuthProvider());
     }
-    
+
   }
 
   /**

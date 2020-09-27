@@ -13,8 +13,8 @@ export const environment = {
     databaseURL: 'https://amiibos-firebase.firebaseio.com',
     projectId: 'amiibos-firebase',
     storageBucket: '',
-    messagingSenderId: "247074249215",
-    appId: "1:247074249215:web:ce0062ec9c0b7e8edaafca"
+    messagingSenderId: '247074249215',
+    appId: '1:247074249215:web:ce0062ec9c0b7e8edaafca'
   }
 };
 

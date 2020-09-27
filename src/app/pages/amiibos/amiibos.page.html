@@ -19,9 +19,14 @@
   </app-amiibos-list>
 </ion-content>
 <ion-footer>
-  <app-progress-toolbar
-    [count]="collectedAmiibosCount$ | async"
-    [total]="amiibosLength$ | async"
-  >
-  </app-progress-toolbar>
+  <ng-container *ngIf="progress$ | async as progress; else loadingFooter">
+    <app-progress-toolbar
+      [count]="progress.collected"
+      [total]="progress.total"
+    >
+    </app-progress-toolbar>
+  </ng-container>
+  <ng-template #loadingFooter>
+    <app-progress-toolbar [count]="0" [total]="0"></app-progress-toolbar>
+  </ng-template>
 </ion-footer>

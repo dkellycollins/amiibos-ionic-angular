@@ -1,19 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
+import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin';
+import { NgxsModule } from '@ngxs/store';
 import { AmiiboItemComponent } from './components/amiibo-item/amiibo-item.component';
 import { AmiibosListComponent } from './components/amiibos-list/amiibos-list.component';
 import { SelectSeriesModalComponent } from './components/select-series-modal/select-series-modal.component';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { AmiibosService } from './services/amiibos.service';
-import { UserAmiibosService } from './services/user-amiibos.service';
 import { SelectSeriesModalService } from './components/select-series-modal/select-series-modal.service';
+import { AmiibosFirestore } from './services/amiibos.firestore';
+import { UserAmiibosFirestore } from './services/user-amiibos.firestore';
+import { UserAmiibosLocalStorage } from './services/user-amiibos.local-storage';
+import { AmiibosState } from './state/amiibos.state';
 
 @NgModule({
   imports: [
     CommonModule,
     IonicModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    NgxsModule.forFeature([AmiibosState]),
+    NgxsFirestoreModule,
+    ReactiveFormsModule
   ],
   declarations: [
     AmiiboItemComponent,
@@ -26,9 +34,10 @@ import { SelectSeriesModalService } from './components/select-series-modal/selec
     SelectSeriesModalComponent
   ],
   providers: [
-    AmiibosService,
-    UserAmiibosService,
-    SelectSeriesModalService
+    SelectSeriesModalService,
+    AmiibosFirestore,
+    UserAmiibosFirestore,
+    UserAmiibosLocalStorage
   ],
   entryComponents: [
     SelectSeriesModalComponent
