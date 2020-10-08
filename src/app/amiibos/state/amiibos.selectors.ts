@@ -19,6 +19,11 @@ export class AmiibosSelectors {
   }
 
   @Selector([AmiibosState])
+  public static selectedType(state: AmiibosStateModel): string {
+    return state.selectedType;
+  }
+
+  @Selector([AmiibosState])
   public static selectedSeries(state: AmiibosStateModel): string {
     return state.selectedSeries;
   }
@@ -32,15 +37,19 @@ export class AmiibosSelectors {
       .sort();
   }
 
-  @Selector([AmiibosSelectors.allAmiibos, AmiibosSelectors.selectedSeries])
+  @Selector([AmiibosSelectors.allAmiibos, AmiibosSelectors.selectedType, AmiibosSelectors.selectedSeries])
   public static selectedAmiibos(
     amiibos: Array<AmiiboModel>,
+    selectedType: string,
     selectedSeries: string
   ): Array<AmiiboModel> {
-    if (selectedSeries === 'All Amiibos' || !selectedSeries) {
-      return amiibos;
+    if (!selectedType) {
+      return [];
     }
-    return amiibos.filter((amiibo) => amiibo.series === selectedSeries);
+
+    return amiibos
+      .filter(amiibo => amiibo.type === selectedType)
+      .filter(amiibo => selectedSeries === 'All Amiibos' || !selectedSeries || amiibo.series === selectedSeries);
   }
 
   @Selector([AmiibosSelectors.selectedAmiibos, AmiibosSelectors.userAmiibos])

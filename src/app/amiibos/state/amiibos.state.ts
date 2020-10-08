@@ -19,6 +19,7 @@ import { AmiibosActions } from './amiibos.actions';
 export interface AmiibosStateModel {
   allAmiibos: Array<AmiiboModel>;
   userAmiibos: Array<UserAmiiboModel>;
+  selectedType: string,
   selectedSeries: string;
 }
 
@@ -27,6 +28,7 @@ export interface AmiibosStateModel {
   defaults: {
     allAmiibos: [],
     userAmiibos: [],
+    selectedType: null,
     selectedSeries: 'All Amiibos',
   },
 })
@@ -43,7 +45,7 @@ export class AmiibosState implements NgxsOnInit {
 
   public ngxsOnInit(): void {
     this.ngxsFirestoreConnect.connect(AmiibosActions.LoadAmiibos, {
-      to: (action) => this.amiibosFirestore.collectionByType$(action.type),
+      to: () => this.amiibosFirestore.collection$(),
     });
 
     this.ngxsFirestoreConnect.connect(AmiibosActions.LoadUserAmiibos, {
@@ -53,10 +55,11 @@ export class AmiibosState implements NgxsOnInit {
     });
   }
 
-  @Action(StreamConnected(AmiibosActions.LoadAmiibos))
-  public loadConnected(context: StateContext<AmiibosStateModel>): void {
+  @Action(AmiibosActions.LoadAmiibos)
+  public load(context: StateContext<AmiibosStateModel>, action: AmiibosActions.LoadAmiibos): void {
     context.patchState({
-      allAmiibos: []
+      selectedType: action.type,
+      selectedSeries: 'All Amiibos'
     });
   }
 

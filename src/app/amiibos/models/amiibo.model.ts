@@ -5,6 +5,11 @@ export interface AmiiboModel {
   slug: string;
 
   /**
+   * The type used to identify which collection the Amiibo beongs to.
+   */
+  type: string;
+
+  /**
    * Display name for the Amiibo figure.
    */
   name: string;
