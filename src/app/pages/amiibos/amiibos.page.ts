@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SelectSeriesModalService } from 'src/app/amiibos/components/select-series-modal/select-series-modal.service';
 import { CollectionProgressModel } from 'src/app/amiibos/models/collection-progress.model';
 import { AmiibosActions } from 'src/app/amiibos/state/amiibos.actions';
@@ -11,7 +12,7 @@ import { AmiiboModel } from '../../amiibos/models/amiibo.model';
   selector: 'app-amiibos',
   templateUrl: './amiibos.page.html',
 })
-export class AmiibosPage implements OnInit {
+export class AmiibosPage implements OnInit, OnDestroy {
 
   @Select(AmiibosSelectors.selectedAmiibos)
   public readonly amiibos$: Observable<Array<AmiiboModel>>;
@@ -25,13 +26,24 @@ export class AmiibosPage implements OnInit {
   @Select(AmiibosSelectors.progress)
   public readonly progress$: Observable<CollectionProgressModel>;
 
+  private subscriptions: Array<Subscription>;
+
   public constructor(
     private readonly store: Store,
-    private readonly selectSeriesModalService: SelectSeriesModalService
+    private readonly selectSeriesModalService: SelectSeriesModalService,
+    private readonly activatedRoute: ActivatedRoute
   ) { }
 
-  public ngOnInit() {
-    this.store.dispatch(new AmiibosActions.LoadAmiibos());
+  public ngOnInit(): void {
+    const routeDataSub = this.activatedRoute.data.subscribe(data => this.store.dispatch(new AmiibosActions.LoadAmiibos(data.type)));
+
+    this.subscriptions = [routeDataSub];
+  }
+
+  public ngOnDestroy(): void {
+    for (const subscription of this.subscriptions) {
+      subscription.unsubscribe();
+    }
   }
 
   public async selectSeries(): Promise<void> {

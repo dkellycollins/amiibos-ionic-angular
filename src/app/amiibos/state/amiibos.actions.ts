@@ -1,12 +1,18 @@
 export namespace AmiibosActions {
   export class LoadAmiibos {
     public static readonly type = '[Amiibos] Load';
+
+    constructor(
+      public readonly type: string
+    ) { }
   }
 
   export class LoadUserAmiibos {
     public static readonly type = '[Amiibos] Load User Amiibos';
 
-    constructor(public readonly userUid: string) { }
+    constructor(
+      public readonly userUid: string
+    ) { }
   }
 
   export class SelectSeries {

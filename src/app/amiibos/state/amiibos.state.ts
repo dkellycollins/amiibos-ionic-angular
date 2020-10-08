@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   Emitted,
   NgxsFirestoreConnect,
+  StreamConnected,
   StreamEmitted
 } from '@ngxs-labs/firestore-plugin';
 import { Action, NgxsOnInit, State, StateContext, Store } from '@ngxs/store';
@@ -42,13 +43,20 @@ export class AmiibosState implements NgxsOnInit {
 
   public ngxsOnInit(): void {
     this.ngxsFirestoreConnect.connect(AmiibosActions.LoadAmiibos, {
-      to: () => this.amiibosFirestore.collection$(),
+      to: (action) => this.amiibosFirestore.collectionByType$(action.type),
     });
 
     this.ngxsFirestoreConnect.connect(AmiibosActions.LoadUserAmiibos, {
       to: (action) => !!action.userUid 
         ? this.userAmiibosFirestore.collectionByUser$(action.userUid) 
         : this.userAmiibosLocalStorage.collection$()
+    });
+  }
+
+  @Action(StreamConnected(AmiibosActions.LoadAmiibos))
+  public loadConnected(context: StateContext<AmiibosStateModel>): void {
+    context.patchState({
+      allAmiibos: []
     });
   }
 
