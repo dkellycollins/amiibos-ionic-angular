@@ -31,6 +31,15 @@
             <ion-label>Login</ion-label>
           </ion-item>
         </ng-template>
+        <ion-item-divider>
+          Collections
+        </ion-item-divider>
+        <ion-item [routerLink]="['amiibos/figures']">
+          Amiibo Figures
+        </ion-item>
+        <ion-item [routerLink]="['amiibos/cards']">
+          Amiibo Cards
+        </ion-item>
       </ion-item-group>
     </ion-content>
   </ion-menu>
