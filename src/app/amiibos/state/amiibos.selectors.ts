@@ -28,9 +28,10 @@ export class AmiibosSelectors {
     return state.filters.series;
   }
 
-  @Selector([AmiibosSelectors.allAmiibos])
-  public static series(amiibos: Array<AmiiboModel>): Array<String> {
+  @Selector([AmiibosSelectors.allAmiibos, AmiibosSelectors.selectedType])
+  public static series(amiibos: Array<AmiiboModel>, selectedType: string): Array<String> {
     return amiibos
+      .filter(amiibo => amiibo.type === selectedType)
       .map(amiibo => amiibo.series)
       .filter((series: string | null): series is string => !!series)
       .filter((value, index, self) => self.indexOf(value) === index)
