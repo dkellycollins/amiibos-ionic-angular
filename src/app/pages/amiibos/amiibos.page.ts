@@ -54,6 +54,10 @@ export class AmiibosPage implements OnInit {
 
   public async selectSeries(): Promise<void> {
     const data = await this.selectSeriesModalService.open();
+    if (data === undefined) {
+      return;
+    }
+    
     this.store.dispatch(new AmiibosActions.SetFilters({ series: data }));
   }
 
