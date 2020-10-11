@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Select, Store } from '@ngxs/store';
-import { Observable, Subscription } from 'rxjs';
+import { combineLatest, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SelectSeriesModalService } from 'src/app/amiibos/components/select-series-modal/select-series-modal.service';
 import { CollectionProgressModel } from 'src/app/amiibos/models/collection-progress.model';
@@ -37,7 +37,8 @@ export class AmiibosPage implements OnInit {
     private readonly store: Store,
     private readonly selectSeriesModalService: SelectSeriesModalService,
     private readonly activatedRoute: ActivatedRoute,
-    private readonly subscriptionService: SubscriptionService
+    private readonly subscriptionService: SubscriptionService,
+    private readonly router: Router
   ) { }
 
   public ngOnInit(): void {
@@ -45,11 +46,12 @@ export class AmiibosPage implements OnInit {
 
     this.store.dispatch(new AmiibosActions.LoadAmiibos());
 
-    const routeDataSub = this.activatedRoute.data.subscribe(data => {
-      this.store.dispatch(new AmiibosActions.SetFilters({ type: data.type, series: null }));
-    });
+    const routeSub = combineLatest([this.activatedRoute.data, this.activatedRoute.queryParams])
+      .subscribe(([data, params]) => {
+        this.store.dispatch(new AmiibosActions.SetFilters({ type: data.type, series: params.series }))
+      });
 
-    this.subscriptionService.add(routeDataSub);
+    this.subscriptionService.add(routeSub);
   }
 
   public async selectSeries(): Promise<void> {
@@ -57,8 +59,8 @@ export class AmiibosPage implements OnInit {
     if (data === undefined) {
       return;
     }
-    
-    this.store.dispatch(new AmiibosActions.SetFilters({ series: data }));
+
+    await this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { series: data }});
   }
 
   public toggleAmiibo({ slug, collected }: { slug: string, collected: boolean }): void {
