@@ -3,7 +3,7 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>{{selectedSeries$ | async}}</ion-title>
+    <ion-title>{{pageTitle$ | async}}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="selectSeries()">
         <ion-icon name="funnel"></ion-icon>

@@ -7,7 +7,7 @@ export interface AmiiboModel {
   /**
    * The type used to identify which collection the Amiibo beongs to.
    */
-  type: string;
+  type: 'figure' | 'card';
 
   /**
    * Display name for the Amiibo figure.

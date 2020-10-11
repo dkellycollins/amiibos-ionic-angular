@@ -19,8 +19,10 @@ import { AmiibosActions } from './amiibos.actions';
 export interface AmiibosStateModel {
   allAmiibos: Array<AmiiboModel>;
   userAmiibos: Array<UserAmiiboModel>;
-  selectedType: string,
-  selectedSeries: string;
+  filters: {
+    type: string,
+    series: string
+  };
 }
 
 @State<AmiibosStateModel>({
@@ -28,8 +30,10 @@ export interface AmiibosStateModel {
   defaults: {
     allAmiibos: [],
     userAmiibos: [],
-    selectedType: null,
-    selectedSeries: 'All Amiibos',
+    filters: {
+      type: null,
+      series: null
+    }
   },
 })
 @Injectable()
@@ -55,14 +59,6 @@ export class AmiibosState implements NgxsOnInit {
     });
   }
 
-  @Action(AmiibosActions.LoadAmiibos)
-  public load(context: StateContext<AmiibosStateModel>, action: AmiibosActions.LoadAmiibos): void {
-    context.patchState({
-      selectedType: action.type,
-      selectedSeries: 'All Amiibos'
-    });
-  }
-
   @Action(StreamEmitted(AmiibosActions.LoadAmiibos))
   public loadEmitted(
     context: StateContext<AmiibosStateModel>,
@@ -80,13 +76,17 @@ export class AmiibosState implements NgxsOnInit {
     })
   }
 
-  @Action(AmiibosActions.SelectSeries)
+  @Action(AmiibosActions.SetFilters)
   public selectSeries(
     context: StateContext<AmiibosStateModel>,
-    { series }: AmiibosActions.SelectSeries
+    action: AmiibosActions.SetFilters
   ): void {
+    const state = context.getState();
     context.patchState({
-      selectedSeries: series,
+      filters: {
+        ...state.filters,
+        ...action.filters
+      }
     });
   }
 

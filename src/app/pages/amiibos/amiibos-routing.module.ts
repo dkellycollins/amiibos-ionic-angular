@@ -16,7 +16,7 @@ const routes: Routes = [
     path: 'cards',
     component: AmiibosPage,
     data: {
-      type: 'cards'
+      type: 'card'
     }
   },
   {

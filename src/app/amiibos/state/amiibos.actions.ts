@@ -1,10 +1,6 @@
 export namespace AmiibosActions {
   export class LoadAmiibos {
-    public static readonly type = '[Amiibos] Load';
-
-    constructor(
-      public readonly type: string
-    ) { }
+    public static readonly type = '[Amiibos] Load Amiibos';
   }
 
   export class LoadUserAmiibos {
@@ -15,11 +11,11 @@ export namespace AmiibosActions {
     ) { }
   }
 
-  export class SelectSeries {
-    public static readonly type = '[Amiibos] Select series';
+  export class SetFilters {
+    public static readonly type = '[Amiibos] Set filters';
 
     constructor(
-      public readonly series: string
+      public readonly filters: { type?: string, series?: string }
     ) { }
   }
 
