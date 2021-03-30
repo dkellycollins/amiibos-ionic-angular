@@ -95,7 +95,7 @@ export class AmiibosState implements NgxsOnInit {
     const user = this.store.selectSnapshot(AuthState.user);
 
     if (!!user) {
-      await this.userAmiibosFirestore.update$(`${action.amiiboSlug}:${user.uid}`, {
+      await this.userAmiibosFirestore.create$(`${action.amiiboSlug}:${user.uid}`, {
         userUid: user.uid,
         amiiboSlug: action.amiiboSlug,
         isCollected: action.isCollected
