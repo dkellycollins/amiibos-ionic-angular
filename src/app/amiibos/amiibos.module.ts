@@ -10,6 +10,7 @@ import { AmiibosListComponent } from './components/amiibos-list/amiibos-list.com
 import { SelectSeriesModalComponent } from './components/select-series-modal/select-series-modal.component';
 import { SelectSeriesModalService } from './components/select-series-modal/select-series-modal.service';
 import { AmiibosFirestore } from './services/amiibos.firestore';
+import { AmiibosService } from './services/amiibos.service';
 import { UserAmiibosFirestore } from './services/user-amiibos.firestore';
 import { UserAmiibosLocalStorage } from './services/user-amiibos.local-storage';
 import { AmiibosState } from './state/amiibos.state';
@@ -37,7 +38,8 @@ import { AmiibosState } from './state/amiibos.state';
     SelectSeriesModalService,
     AmiibosFirestore,
     UserAmiibosFirestore,
-    UserAmiibosLocalStorage
+    UserAmiibosLocalStorage,
+    AmiibosService
   ],
   entryComponents: [
     SelectSeriesModalComponent
