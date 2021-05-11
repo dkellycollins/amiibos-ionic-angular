@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Platform } from '@ionic/angular';
 import { cfaSignInGoogle, cfaSignOut } from 'capacitor-firebase-auth';
-import { auth, User } from 'firebase';
+import firebase from 'firebase/app';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserModel } from '../models/user.model';
@@ -34,7 +34,7 @@ export class AuthService {
       await cfaSignInGoogle().toPromise();
     }
     else {
-      await this.fireAuth.signInWithRedirect(new auth.GoogleAuthProvider());
+      await this.fireAuth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
     }
 
   }
@@ -51,7 +51,7 @@ export class AuthService {
     }
   }
 
-  private mapToUserModel(user: User): UserModel {
+  private mapToUserModel(user: firebase.User): UserModel {
     return {
       uid: user.uid,
       photoUrl: user.photoURL,
