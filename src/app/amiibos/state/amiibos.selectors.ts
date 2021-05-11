@@ -1,5 +1,5 @@
 import { Selector } from '@ngxs/store';
-import { keyBy } from 'lodash';
+import keyBy from 'lodash/keyBy';
 import { AmiiboModel } from '../models/amiibo.model';
 import { CollectableAmiiboModel } from '../models/collectable-amiibo.model';
 import { CollectionProgressModel } from '../models/collection-progress.model';
