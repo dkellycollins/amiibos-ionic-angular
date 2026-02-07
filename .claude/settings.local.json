@@ -7,7 +7,16 @@
       "Bash(npx @angular/cli@14 update @angular/core@14 @angular/cli@14 --force --allow-dirty)",
       "Bash(npx @angular/cli@15 update:*)",
       "Bash(npm run build:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nPhase 1: Update Angular 11 → 15 and Ionic 5 → 6\n\nUpdated Angular incrementally from v11 to v15:\n- Angular 11 → 12 → 13 → 14 → 15\n- Updated TypeScript from 4.0 to 4.9\n- Updated Ionic from 5.6 to 6.7\n- Removed deprecated entryComponents from modules\n- Removed IE11 polyfills\n- Updated tsconfig target to ES2022\n- Fixed environment version imports\n- Fixed progress-bar component CSS syntax\n- Added skipLibCheck to handle incompatible library types\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(npx @angular/cli@16 update @angular/core@16 @angular/cli@16 --force --allow-dirty)",
+      "Bash(node --version:*)",
+      "Bash(nvm:*)",
+      "Bash(npx @angular/cli@17 update @angular/core@17 @angular/cli@17 --force --allow-dirty)",
+      "Bash(npx @angular/cli@18 update @angular/core@18 @angular/cli@18 --force --allow-dirty)",
+      "Bash(npx @angular/cli@18 update @angular/cli --name use-application-builder --force --allow-dirty)",
+      "Bash(npm uninstall:*)"
     ]
   }
 }
