@@ -1,5 +1,10 @@
 export interface AmiiboModel {
   /**
+   * The Firestore document ID.
+   */
+  id?: string;
+
+  /**
    * Unique identifier of the Amiibo.
    */
   slug: string;

@@ -1,5 +1,10 @@
 export interface UserAmiiboModel {
   /**
+   * The Firestore document ID.
+   */
+  id?: string;
+
+  /**
    * The unique id of the UserModel, if available.
    */
   userUid?: string;

@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin';
+// import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin'; // Removed - incompatible with Firebase modular SDK
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
 import { NgxsRouterPluginModule } from '@ngxs/router-plugin';
 import { NgxsModule } from '@ngxs/store';
@@ -22,23 +24,25 @@ import { AuthModule } from './auth/auth.module';
         ServiceWorkerModule.register('ngsw-worker.js', {
             enabled: environment.production,
         }),
-        AngularFireModule.initializeApp(environment.firebase),
         NgxsModule.forRoot([], {
             developmentMode: !environment.production,
             selectorOptions: { suppressErrors: false }
         }),
         NgxsRouterPluginModule.forRoot(),
         NgxsReduxDevtoolsPluginModule.forRoot(),
-        NgxsFirestoreModule.forRoot(),
+        // NgxsFirestoreModule.forRoot(), // Removed - incompatible with Firebase modular SDK
         AppRoutingModule,
         AuthModule,
     ],
-    declarations: [AppComponent],
     providers: [
         StatusBar,
         SplashScreen,
         { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore()),
     ],
+    declarations: [AppComponent],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

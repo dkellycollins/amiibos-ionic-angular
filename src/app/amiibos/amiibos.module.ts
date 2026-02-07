@@ -1,9 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin';
+// import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin'; // Removed - incompatible with Firebase modular SDK
 import { NgxsModule } from '@ngxs/store';
 import { AmiiboItemComponent } from './components/amiibo-item/amiibo-item.component';
 import { AmiibosListComponent } from './components/amiibos-list/amiibos-list.component';
@@ -19,9 +18,8 @@ import { AmiibosState } from './state/amiibos.state';
     imports: [
         CommonModule,
         IonicModule,
-        AngularFirestoreModule,
         NgxsModule.forFeature([AmiibosState]),
-        NgxsFirestoreModule,
+        // NgxsFirestoreModule, // Removed - incompatible with Firebase modular SDK
         ReactiveFormsModule
     ],
     declarations: [

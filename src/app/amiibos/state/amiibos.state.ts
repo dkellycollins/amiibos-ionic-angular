@@ -1,12 +1,6 @@
-import { Injectable } from '@angular/core';
-import {
-  Emitted,
-  NgxsFirestoreConnect,
-  StreamConnected,
-  StreamEmitted
-} from '@ngxs-labs/firestore-plugin';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Action, NgxsOnInit, State, StateContext, Store } from '@ngxs/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthActions } from 'src/app/auth/state/auth.actions';
 import { AuthState } from 'src/app/auth/state/auth.state';
 import { AmiiboModel } from '../models/amiibo.model';
@@ -37,43 +31,43 @@ export interface AmiibosStateModel {
   },
 })
 @Injectable()
-export class AmiibosState implements NgxsOnInit {
+export class AmiibosState implements NgxsOnInit, OnDestroy {
+  private subscriptions = new Subscription();
 
   constructor(
-    private readonly ngxsFirestoreConnect: NgxsFirestoreConnect,
     private readonly amiibosFirestore: AmiibosFirestore,
     private readonly userAmiibosFirestore: UserAmiibosFirestore,
     private readonly userAmiibosLocalStorage: UserAmiibosLocalStorage,
     private readonly store: Store
   ) {}
 
-  public ngxsOnInit(): void {
-    this.ngxsFirestoreConnect.connect(AmiibosActions.LoadAmiibos, {
-      to: () => this.amiibosFirestore.collection$(),
-    });
+  public ngxsOnInit(context: StateContext<AmiibosStateModel>): void {
+    // Subscribe to all amiibos collection
+    this.subscriptions.add(
+      this.amiibosFirestore.collection$().subscribe(amiibos => {
+        context.patchState({ allAmiibos: amiibos });
+      })
+    );
 
-    this.ngxsFirestoreConnect.connect(AmiibosActions.LoadUserAmiibos, {
-      to: (action) => !!action.userUid 
-        ? this.userAmiibosFirestore.collectionByUser$(action.userUid) 
-        : this.userAmiibosLocalStorage.collection$()
-    });
+    // Subscribe to user amiibos - will be loaded when user logs in
+    const user = this.store.selectSnapshot(AuthState.user);
+    this.loadUserAmiibos(context, user?.uid);
   }
 
-  @Action(StreamEmitted(AmiibosActions.LoadAmiibos))
-  public loadEmitted(
-    context: StateContext<AmiibosStateModel>,
-    action: Emitted<AmiibosActions.LoadAmiibos, Array<AmiiboModel>>
-  ): void {
-    context.patchState({
-      allAmiibos: action.payload,
-    });
+  public ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
-  @Action(StreamEmitted(AmiibosActions.LoadUserAmiibos))
-  public loadUserAmiibosEmiited(context: StateContext<AmiibosStateModel>, action: Emitted<AmiibosActions.LoadUserAmiibos, Array<UserAmiiboModel>>): void {
-    context.patchState({
-      userAmiibos: action.payload
-    })
+  private loadUserAmiibos(context: StateContext<AmiibosStateModel>, userUid?: string): void {
+    const source$ = userUid
+      ? this.userAmiibosFirestore.collectionByUser$(userUid)
+      : this.userAmiibosLocalStorage.collection$();
+
+    this.subscriptions.add(
+      source$.subscribe(userAmiibos => {
+        context.patchState({ userAmiibos });
+      })
+    );
   }
 
   @Action(AmiibosActions.SetFilters)
@@ -95,11 +89,11 @@ export class AmiibosState implements NgxsOnInit {
     const user = this.store.selectSnapshot(AuthState.user);
 
     if (!!user) {
-      await this.userAmiibosFirestore.update$(`${action.amiiboSlug}:${user.uid}`, {
+      await this.userAmiibosFirestore.update(`${action.amiiboSlug}:${user.uid}`, {
         userUid: user.uid,
         amiiboSlug: action.amiiboSlug,
         isCollected: action.isCollected
-      }).toPromise()
+      });
     }
     else {
       this.userAmiibosLocalStorage.update(action.amiiboSlug, action.isCollected)
@@ -107,7 +101,8 @@ export class AmiibosState implements NgxsOnInit {
   }
 
   @Action(AuthActions.SetUser)
-  public setUser(context: StateContext<AmiibosStateModel>, action: AuthActions.SetUser): Observable<void> {
-    return context.dispatch(new AmiibosActions.LoadUserAmiibos(action.payload?.uid));
+  public setUser(context: StateContext<AmiibosStateModel>, action: AuthActions.SetUser): void {
+    // Reload user amiibos when auth state changes
+    this.loadUserAmiibos(context, action.payload?.uid);
   }
 }

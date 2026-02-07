@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/auth';
+import { Auth, GoogleAuthProvider, signInWithRedirect, signOut as firebaseSignOut, user, User } from '@angular/fire/auth';
 import { Platform } from '@ionic/angular';
-import { cfaSignInGoogle, cfaSignOut } from 'capacitor-firebase-auth';
-import firebase from 'firebase/app';
+// import { cfaSignInGoogle, cfaSignOut } from 'capacitor-firebase-auth';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserModel } from '../models/user.model';
@@ -11,7 +10,7 @@ import { UserModel } from '../models/user.model';
 export class AuthService {
 
   constructor(
-    private readonly fireAuth: AngularFireAuth,
+    private readonly auth: Auth,
     private readonly platform: Platform
   ) { }
 
@@ -21,8 +20,8 @@ export class AuthService {
    * @returns An observable that will emit the currently authenticated User.
    */
   public getUser(): Observable<UserModel | undefined> {
-    return this.fireAuth.user.pipe(
-      map(user => !!user ? this.mapToUserModel(user) : undefined)
+    return user(this.auth).pipe(
+      map(firebaseUser => !!firebaseUser ? this.mapToUserModel(firebaseUser) : undefined)
     );
   }
 
@@ -30,12 +29,14 @@ export class AuthService {
    * Redirects the application to a sign in page.
    */
   public async login(): Promise<void> {
-    if (this.platform.is('android')) {
-      await cfaSignInGoogle().toPromise();
-    }
-    else {
-      await this.fireAuth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
-    }
+    // Capacitor-specific auth will be removed in Phase 6
+    // if (this.platform.is('android')) {
+    //   await cfaSignInGoogle().toPromise();
+    // }
+    // else {
+      const provider = new GoogleAuthProvider();
+      await signInWithRedirect(this.auth, provider);
+    // }
 
   }
 
@@ -43,19 +44,20 @@ export class AuthService {
    * Clears the currently authenticated user.
    */
   public async logout(): Promise<void> {
-    if (this.platform.is('android')) {
-      await cfaSignOut().toPromise();
-    }
-    else {
-      await this.fireAuth.signOut();
-    }
+    // Capacitor-specific auth will be removed in Phase 6
+    // if (this.platform.is('android')) {
+    //   await cfaSignOut().toPromise();
+    // }
+    // else {
+      await firebaseSignOut(this.auth);
+    // }
   }
 
-  private mapToUserModel(user: firebase.User): UserModel {
+  private mapToUserModel(firebaseUser: User): UserModel {
     return {
-      uid: user.uid,
-      photoUrl: user.photoURL,
-      displayName: user.displayName
+      uid: firebaseUser.uid,
+      photoUrl: firebaseUser.photoURL,
+      displayName: firebaseUser.displayName
     };
   }
 }
