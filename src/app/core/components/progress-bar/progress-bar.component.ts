@@ -22,6 +22,7 @@ import { Component, Input } from '@angular/core';
           overflow: hidden;
           padding: 0px;
           border-radius: 20px;
+        }
   `],
   template: `
     <div class="progress-outer">

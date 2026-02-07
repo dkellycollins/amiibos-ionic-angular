@@ -16,33 +16,30 @@ import { UserAmiibosLocalStorage } from './services/user-amiibos.local-storage';
 import { AmiibosState } from './state/amiibos.state';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    IonicModule,
-    AngularFirestoreModule,
-    NgxsModule.forFeature([AmiibosState]),
-    NgxsFirestoreModule,
-    ReactiveFormsModule
-  ],
-  declarations: [
-    AmiiboItemComponent,
-    AmiibosListComponent,
-    SelectSeriesModalComponent
-  ],
-  exports: [
-    AmiiboItemComponent,
-    AmiibosListComponent,
-    SelectSeriesModalComponent
-  ],
-  providers: [
-    SelectSeriesModalService,
-    AmiibosFirestore,
-    UserAmiibosFirestore,
-    UserAmiibosLocalStorage,
-    AmiibosService
-  ],
-  entryComponents: [
-    SelectSeriesModalComponent
-  ]
+    imports: [
+        CommonModule,
+        IonicModule,
+        AngularFirestoreModule,
+        NgxsModule.forFeature([AmiibosState]),
+        NgxsFirestoreModule,
+        ReactiveFormsModule
+    ],
+    declarations: [
+        AmiiboItemComponent,
+        AmiibosListComponent,
+        SelectSeriesModalComponent
+    ],
+    exports: [
+        AmiiboItemComponent,
+        AmiibosListComponent,
+        SelectSeriesModalComponent
+    ],
+    providers: [
+        SelectSeriesModalService,
+        AmiibosFirestore,
+        UserAmiibosFirestore,
+        UserAmiibosLocalStorage,
+        AmiibosService
+    ]
 })
 export class AmiibosModule {}

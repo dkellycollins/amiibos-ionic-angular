@@ -1,8 +1,6 @@
-import { version } from '../../package.json';
-
 export const environment = {
   production: true,
-  version,
+  version: '0.0.1',
   firebase: {
     apiKey: 'AIzaSyB5m7Y9MdL1VkIlCZf7u36deIJjvUrmqZg',
     authDomain: 'amiibos-firebase.firebaseapp.com',

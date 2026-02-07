@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder } from '@angular/forms';
 import { ToggleChangeEventDetail } from '@ionic/core';
 import { Subscription } from 'rxjs';
 import { AmiiboModel } from '../../models/amiibo.model';
@@ -33,7 +33,7 @@ export class AmiiboItemComponent implements OnInit, OnDestroy {
   private subscriptions: Array<Subscription>;
 
   constructor(
-    private readonly formBuilder: FormBuilder
+    private readonly formBuilder: UntypedFormBuilder
   ) {
     this.collectedChanged = new EventEmitter();
     this.control = this.formBuilder.control(false);

@@ -16,31 +16,29 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 
 @NgModule({
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-    }),
-    AngularFireModule.initializeApp(environment.firebase),
-    NgxsModule.forRoot([], {
-      developmentMode: !environment.production,
-      selectorOptions: { suppressErrors: false }
-    }),
-    NgxsRouterPluginModule.forRoot(),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsFirestoreModule.forRoot(),
-
-    AppRoutingModule,
-    AuthModule,
-  ],
-  declarations: [AppComponent],
-  entryComponents: [],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-  ],
-  bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production,
+        }),
+        AngularFireModule.initializeApp(environment.firebase),
+        NgxsModule.forRoot([], {
+            developmentMode: !environment.production,
+            selectorOptions: { suppressErrors: false }
+        }),
+        NgxsRouterPluginModule.forRoot(),
+        NgxsReduxDevtoolsPluginModule.forRoot(),
+        NgxsFirestoreModule.forRoot(),
+        AppRoutingModule,
+        AuthModule,
+    ],
+    declarations: [AppComponent],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
