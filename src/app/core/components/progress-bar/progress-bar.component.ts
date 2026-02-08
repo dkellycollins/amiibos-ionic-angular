@@ -3,9 +3,8 @@ import { Component, Input } from '@angular/core';
 // Modifed from https://github.com/CharlesGrimont/angular-progress-bar
 
 @Component({
-  selector:
-      'progress-bar',
-  styles: [`
+    selector: 'progress-bar',
+    styles: [`
         .progress-outer {
           width: 96%;
           margin: 10px 2%;
@@ -24,13 +23,14 @@ import { Component, Input } from '@angular/core';
           border-radius: 20px;
         }
   `],
-  template: `
+    template: `
     <div class="progress-outer">
     <div class="progress-inner" [style.width]="whichProgress(progress) + '%'" [style.background-color]="degraded == null ? color : whichColor(progress)">
       {{whichDisplay(progress, progressDisplay)}}
     </div>
   </div>
-  `
+  `,
+    standalone: true
 })
 export class ProgressBarComponent {
 

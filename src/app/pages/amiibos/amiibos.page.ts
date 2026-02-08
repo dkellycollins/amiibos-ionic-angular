@@ -7,13 +7,19 @@ import { CollectionProgressModel } from 'src/app/amiibos/models/collection-progr
 import { AmiibosService } from 'src/app/amiibos/services/amiibos.service';
 import { SubscriptionService } from 'src/app/core/services/subscription.service';
 import { AmiiboModel } from '../../amiibos/models/amiibo.model';
+import { IonicModule } from '@ionic/angular';
+import { AmiibosListComponent } from '../../amiibos/components/amiibos-list/amiibos-list.component';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { ProgressToolbarComponent } from '../../core/components/progress-toolbar/progress-toolbar.component';
 
 @Component({
-  selector: 'app-amiibos',
-  templateUrl: './amiibos.page.html',
-  providers: [
-    SubscriptionService
-  ]
+    selector: 'app-amiibos',
+    templateUrl: './amiibos.page.html',
+    providers: [
+        SubscriptionService
+    ],
+    standalone: true,
+    imports: [IonicModule, AmiibosListComponent, NgIf, ProgressToolbarComponent, AsyncPipe]
 })
 export class AmiibosPage implements OnInit {
 

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
+import { RouterOutlet } from '@angular/router';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, Platform, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
 import { UserModel } from './auth/models/user.model';
@@ -10,7 +12,9 @@ import { AuthStore } from './auth/services/auth.store';
 
 @Component({
   selector: 'app-root',
-  templateUrl: 'app.component.html'
+  templateUrl: 'app.component.html',
+  standalone: true,
+  imports: [IonicModule, RouterOutlet, AsyncPipe, NgIf]
 })
 export class AppComponent {
 

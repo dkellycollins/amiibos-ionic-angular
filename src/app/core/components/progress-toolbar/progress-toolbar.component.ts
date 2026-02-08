@@ -1,9 +1,13 @@
 import { Component, Input } from '@angular/core';
+import { IonicModule } from '@ionic/angular';
+import { ProgressBarComponent } from '../progress-bar/progress-bar.component';
 
 @Component({
-  selector: 'app-progress-toolbar',
-  templateUrl: './progress-toolbar.component.html',
-  styleUrls: ['./progress-toolbar.component.scss'],
+    selector: 'app-progress-toolbar',
+    templateUrl: './progress-toolbar.component.html',
+    styleUrls: ['./progress-toolbar.component.scss'],
+    standalone: true,
+    imports: [IonicModule, ProgressBarComponent],
 })
 export class ProgressToolbarComponent {
 

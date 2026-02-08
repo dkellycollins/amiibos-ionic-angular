@@ -1,11 +1,18 @@
 import { Component } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { AmiibosStore } from '../../services/amiibos.store';
+import { NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-  templateUrl: './select-series-modal.component.html',
+    templateUrl: './select-series-modal.component.html',
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgFor,
+        AsyncPipe,
+    ],
 })
 export class SelectSeriesModalComponent {
   public readonly series$: Observable<Array<string>>;

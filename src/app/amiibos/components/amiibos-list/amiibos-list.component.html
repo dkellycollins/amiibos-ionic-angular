@@ -1,9 +1,10 @@
 <ion-list>
-  <app-amiibo-item
-    *ngFor="let amiibo of amiibos; trackBy: getAmiiboId"
-    [amiibo]="amiibo"
-    [collected]="amiibo.isCollected"
-    (collectedChanged)="onCollectedChanged(amiibo.slug, $event)"
-  >
-  </app-amiibo-item>
+  @for (amiibo of amiibos; track getAmiiboId($index, amiibo)) {
+    <app-amiibo-item
+      [amiibo]="amiibo"
+      [collected]="amiibo.isCollected"
+      (collectedChanged)="onCollectedChanged(amiibo.slug, $event)"
+    >
+    </app-amiibo-item>
+  }
 </ion-list>

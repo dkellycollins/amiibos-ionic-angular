@@ -1,13 +1,21 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { AbstractControl, UntypedFormBuilder } from '@angular/forms';
+import { AbstractControl, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ToggleChangeEventDetail } from '@ionic/core';
 import { Subscription } from 'rxjs';
 import { AmiiboModel } from '../../models/amiibo.model';
+import { IonicModule } from '@ionic/angular';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-amiibo-item',
-  templateUrl: './amiibo-item.component.html',
-  styleUrls: ['./amiibo-item.component.scss'],
+    selector: 'app-amiibo-item',
+    templateUrl: './amiibo-item.component.html',
+    styleUrls: ['./amiibo-item.component.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgIf,
+        ReactiveFormsModule,
+    ],
 })
 export class AmiiboItemComponent implements OnInit, OnDestroy {
 

@@ -9,9 +9,8 @@ describe('ProgressToolbarComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProgressToolbarComponent ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), ProgressToolbarComponent]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ProgressToolbarComponent);
     component = fixture.componentInstance;

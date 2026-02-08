@@ -1,10 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AmiiboModel } from '../../models/amiibo.model';
+import { IonicModule } from '@ionic/angular';
+import { NgFor } from '@angular/common';
+import { AmiiboItemComponent } from '../amiibo-item/amiibo-item.component';
 
 @Component({
-  selector: 'app-amiibos-list',
-  templateUrl: './amiibos-list.component.html',
-  styleUrls: ['./amiibos-list.component.scss'],
+    selector: 'app-amiibos-list',
+    templateUrl: './amiibos-list.component.html',
+    styleUrls: ['./amiibos-list.component.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgFor,
+        AmiiboItemComponent,
+    ],
 })
 export class AmiibosListComponent {
 
