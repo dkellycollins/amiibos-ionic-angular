@@ -38,7 +38,7 @@ export class AmiibosPage implements OnInit {
     this.progress$ = this.amiibosService.progress$;
     this.pageTitle$ = this.selectedSeries$.pipe(map(selectedSeries => selectedSeries || 'All Amiibos'));
 
-    this.amiibosService.loadAmiibos();
+    // Firestore sync is now automatically initialized in the AmiibosStore constructor
 
     const routeSub = combineLatest([this.activatedRoute.data, this.activatedRoute.queryParams])
       .subscribe(([data, params]) => this.amiibosService.setFilters({ type: data.type, series: params.series }));

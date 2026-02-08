@@ -1,38 +1,33 @@
 import { Injectable } from "@angular/core";
-import { Select, Store } from "@ngxs/store";
+import { toObservable } from "@angular/core/rxjs-interop";
 import { Observable } from "rxjs";
-import { AmiiboModel } from "../models/amiibo.model";
+import { map } from "rxjs/operators";
+import { CollectableAmiiboModel } from "../models/collectable-amiibo.model";
 import { CollectionProgressModel } from "../models/collection-progress.model";
-import { AmiibosActions } from "../state/amiibos.actions";
-import { AmiibosSelectors } from "../state/amiibos.selectors";
+import { AmiibosStore } from "./amiibos.store";
 
 @Injectable()
 export class AmiibosService {
-  @Select(AmiibosSelectors.selectedAmiibos)
-  public readonly amiibos$: Observable<Array<AmiiboModel>>;
+  // Convert signals to observables for backward compatibility
+  public readonly amiibos$ = toObservable(this.store.selectedAmiibos);
 
-  @Select(AmiibosSelectors.selectedSeries)
-  public readonly selectedSeries$: Observable<string>;
+  public readonly selectedSeries$ = toObservable(this.store.filters).pipe(
+    map(filters => filters.series ?? '')
+  );
 
-  @Select(AmiibosSelectors.collectedAmiibos)
-  public readonly collectedAmiibos$: Observable<Array<AmiiboModel & { isCollected: boolean }>>;
+  public readonly collectedAmiibos$ = toObservable(this.store.collectedAmiibos);
 
-  @Select(AmiibosSelectors.progress)
-  public readonly progress$: Observable<CollectionProgressModel>;
+  public readonly progress$ = toObservable(this.store.progress);
 
   constructor(
-    private readonly store: Store
+    private readonly store: AmiibosStore
   ) { }
 
-  public loadAmiibos(): Observable<unknown> {
-    return this.store.dispatch(new AmiibosActions.LoadAmiibos());
+  public setFilters(filters: { type?: string, series?: string }): void {
+    this.store.setFilters(filters);
   }
 
-  public setFilters(filters: { type?: string, series?: string }): Observable<unknown> {
-    return this.store.dispatch(new AmiibosActions.SetFilters(filters))
-  }
-
-  public toggleAmiibo(slug: string, collected: boolean): Observable<unknown> {
-    return this.store.dispatch(new AmiibosActions.ToggleAmiibo(slug, collected));
+  public async toggleAmiibo(slug: string, collected: boolean): Promise<void> {
+    await this.store.toggleAmiibo(slug, collected);
   }
 }
