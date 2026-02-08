@@ -1,8 +1,8 @@
 {
-  "name": "Amiibos Tracker",
+  "name": "Amiibos Collection Tracker",
   "short_name": "Amiibos",
-  "theme_color": "#cc0000",
-  "background_color": "#fafafa",
+  "theme_color": "#3880ff",
+  "background_color": "#ffffff",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
