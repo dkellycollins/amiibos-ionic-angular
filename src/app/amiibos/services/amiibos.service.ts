@@ -1,9 +1,6 @@
 import { Injectable } from "@angular/core";
 import { toObservable } from "@angular/core/rxjs-interop";
-import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { CollectableAmiiboModel } from "../models/collectable-amiibo.model";
-import { CollectionProgressModel } from "../models/collection-progress.model";
 import { AmiibosStore } from "./amiibos.store";
 
 @Injectable()

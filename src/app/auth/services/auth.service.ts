@@ -18,7 +18,7 @@ export class AuthService {
    */
   public getUser(): Observable<UserModel | undefined> {
     return user(this.auth).pipe(
-      map(firebaseUser => !!firebaseUser ? this.mapToUserModel(firebaseUser) : undefined)
+      map(firebaseUser => firebaseUser ? this.mapToUserModel(firebaseUser) : undefined)
     );
   }
 

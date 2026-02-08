@@ -16,7 +16,8 @@
       "Bash(npx @angular/cli@17 update @angular/core@17 @angular/cli@17 --force --allow-dirty)",
       "Bash(npx @angular/cli@18 update @angular/core@18 @angular/cli@18 --force --allow-dirty)",
       "Bash(npx @angular/cli@18 update @angular/cli --name use-application-builder --force --allow-dirty)",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(npm run lint:*)"
     ]
   }
 }

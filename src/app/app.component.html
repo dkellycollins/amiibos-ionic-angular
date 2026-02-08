@@ -14,7 +14,7 @@
           <ion-item>
             @if (user.photoUrl) {
               <ion-avatar>
-                <img [src]="user.photoUrl" />
+                <img [src]="user.photoUrl" alt="User profile photo" />
               </ion-avatar>
             }
             @if (!user.photoUrl) {

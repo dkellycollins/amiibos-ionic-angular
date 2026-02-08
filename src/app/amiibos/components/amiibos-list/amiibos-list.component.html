@@ -1,5 +1,5 @@
 <ion-list>
-  @for (amiibo of amiibos; track getAmiiboId($index, amiibo)) {
+  @for (amiibo of amiibos; track getAmiiboId(amiibo)) {
     <app-amiibo-item
       [amiibo]="amiibo"
       [collected]="amiibo.isCollected"

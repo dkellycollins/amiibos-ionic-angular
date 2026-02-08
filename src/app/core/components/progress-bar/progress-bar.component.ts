@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 // Modifed from https://github.com/CharlesGrimont/angular-progress-bar
 
 @Component({
-    selector: 'progress-bar',
+    selector: 'app-progress-bar',
     styles: [`
         .progress-outer {
           width: 96%;
@@ -25,7 +25,7 @@ import { Component, Input } from '@angular/core';
   `],
     template: `
     <div class="progress-outer">
-    <div class="progress-inner" [style.width]="whichProgress(progress) + '%'" [style.background-color]="degraded == null ? color : whichColor(progress)">
+    <div class="progress-inner" [style.width]="whichProgress(progress) + '%'" [style.background-color]="degraded === null ? color : whichColor(progress)">
       {{whichDisplay(progress, progressDisplay)}}
     </div>
   </div>
@@ -35,10 +35,10 @@ import { Component, Input } from '@angular/core';
 export class ProgressBarComponent {
 
   /** Inputs **/
-  @Input('progress') public progress: string;
-  @Input('progressDisplay') public progressDisplay?: string;
-  @Input('color') public color: string;
-  @Input('color-degraded') public degraded: any;
+  @Input() public progress: string;
+  @Input() public progressDisplay?: string;
+  @Input() public color: string;
+  @Input() public degraded: Record<number, string> | null = null;
 
   constructor() {
     // Default color
@@ -51,9 +51,7 @@ export class ProgressBarComponent {
    */
   public whichColor(percent: string){
     // Get all entries index as an array
-    let k: Array<any> = Object.keys(this.degraded);
-    // Convert string to number
-    k.forEach((e, i) => k[i] = +e);
+    let k: Array<number> = Object.keys(this.degraded!).map(e => +e);
     // Sort them by value
     k = k.sort((a, b) => a - b);
     // Percent as number

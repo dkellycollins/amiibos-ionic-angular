@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { computed } from '@angular/core';
-import { UserModel } from '../models/user.model';
 import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })

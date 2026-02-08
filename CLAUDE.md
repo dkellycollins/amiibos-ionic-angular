@@ -4,96 +4,228 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-An Ionic Angular application for tracking Amiibo collections. Built with Angular 11, Ionic 5, and Firebase/Firestore for data persistence. Uses Capacitor for native mobile capabilities and NGXS for state management.
+An Ionic Angular Progressive Web Application (PWA) for tracking Amiibo collections. Built with Angular 18, Ionic 8, and Firebase/Firestore for data persistence. Uses Angular Signals for reactive state management.
+
+**Technology Stack:**
+- Angular 18 with standalone components
+- Ionic Framework 8
+- Firebase 10 (modular SDK)
+- Angular Signals for state management
+- TypeScript 5.4
+- ESLint for linting
+- Cypress for E2E testing
 
 ## Common Commands
 
 ### Development
 - `npm start` - Start development server
 - `ng serve` - Alternative to npm start
-- `npm run build` - Build for production and sync with Capacitor
-- `npm run build:prod` - Build with Ionic production optimizations
+- `npm run build` - Build for production
+- `npm run build:prod` - Build with production optimizations
 
 ### Testing & Linting
 - `npm test` - Run Karma/Jasmine unit tests
-- `npm run lint` - Lint TypeScript files
+- `npm run lint` - Lint TypeScript files with ESLint
 - `npm run lint:fix` - Auto-fix linting issues
-- `npm run e2e` - Run Protractor end-to-end tests
-
-### Capacitor (Mobile)
-- `cap sync` - Sync web assets to native platforms (automatically run after build)
-- Android build output is in the `android/` directory
+- `npm run e2e` - Run Cypress E2E tests (interactive mode)
+- `npm run e2e:headless` - Run Cypress E2E tests (headless mode)
 
 ## Architecture
 
-### State Management with NGXS
+### Standalone Components Architecture
 
-The application uses NGXS for centralized state management with two main feature states:
+The application uses Angular's standalone components pattern:
 
-**AmiibosState** (`src/app/amiibos/state/amiibos.state.ts`)
-- Manages all amiibos data and user collection status
-- Uses `@ngxs-labs/firestore-plugin` for real-time Firestore synchronization
-- Connects to Firestore when user is authenticated, falls back to localStorage when not
-- Listens to `AuthActions.SetUser` to reload user's collection data when auth state changes
+- **No NgModules** - All components are standalone with explicit imports
+- **Functional Routing** - Routes use `loadComponent` for lazy loading
+- **Bootstrap** - Application bootstrapped via `bootstrapApplication` in `main.ts`
+- **Provider Configuration** - All services configured in bootstrap providers
+
+### State Management with Angular Signals
+
+The application uses Angular Signals for reactive state management, replacing the previous NGXS implementation:
+
+**AuthStore** (`src/app/auth/services/auth.store.ts`)
+- Manages user authentication state using Signals
+- Converts Firebase auth observable to Signal with `toSignal()`
+- Provides computed `isAuthenticated` signal
 - State shape:
   ```typescript
   {
-    allAmiibos: AmiiboModel[],      // All available amiibos from Firestore
-    userAmiibos: UserAmiiboModel[],  // User's collection status
-    filters: { type: string, series: string }
+    user: Signal<UserModel | undefined>,
+    isAuthenticated: Signal<boolean>
   }
   ```
 
-**AuthState** (`src/app/auth/state/auth.state.ts`)
-- Manages user authentication state
-- Subscribes to Firebase auth changes on initialization
-- State shape: `{ user?: UserModel }`
-
-### Module Structure
-
-The app follows Angular's feature module pattern:
-
-- **AppModule** - Root module, imports NGXS with router and devtools plugins
-- **AuthModule** - Authentication feature (AngularFire Auth, Google Sign-in via Capacitor)
-- **AmiibosModule** - Core amiibo functionality (components, services, state)
-- **CoreModule** - Shared UI components (ProgressBar, ProgressToolbar)
-- **Pages** - Lazy-loaded routable pages under `src/app/pages/`
+**AmiibosStore** (`src/app/amiibos/services/amiibos.store.ts`)
+- Manages all amiibos data and user collection status
+- Uses Signals for reactive state updates
+- Automatically syncs with Firestore in real-time
+- Provides computed values for filtered lists and progress
+- State shape:
+  ```typescript
+  {
+    allAmiibos: Signal<AmiiboModel[]>,
+    userAmiibos: Signal<UserAmiiboModel[]>,
+    filters: Signal<{ type: string | null, series: string | null }>,
+    selectedAmiibos: Signal<AmiiboModel[]>,           // computed
+    collectedAmiibos: Signal<CollectableAmiiboModel[]>, // computed
+    progress: Signal<{ total: number, collected: number }> // computed
+  }
+  ```
 
 ### Data Flow Pattern
 
-1. **State Actions** - Components dispatch actions (e.g., `AmiibosActions.ToggleAmiibo`)
-2. **State Handlers** - State classes handle actions, may call services
-3. **Firestore Sync** - `NgxsFirestoreConnect` automatically syncs Firestore collections to state via `StreamEmitted` actions
-4. **Services** - Business logic layer between components and Firestore/localStorage
-5. **Components** - Subscribe to state via service observables or Store selectors
+1. **User Interaction** - Components call store methods (e.g., `amiibosStore.toggleAmiibo()`)
+2. **Store Updates** - Store methods update signals and call Firestore services
+3. **Reactive Updates** - Computed signals automatically recalculate
+4. **Service Layer** - AmiibosService provides Observable wrappers via `toObservable()` for backward compatibility
+5. **Components** - Subscribe to observables or use signals directly in templates
+6. **Firestore Sync** - Real-time listeners update signals automatically
 
 ### Key Services
 
-- **AmiibosService** - Facade for amiibos state, provides composed observables
-- **AmiibosFirestore** / **UserAmiibosFirestore** - Firestore collection abstractions
+- **AuthStore** - Signal-based authentication state management
+- **AmiibosStore** - Signal-based collection state management
+- **AmiibosService** - Facade that converts store signals to observables for components
+- **AmiibosFirestore** - Firestore collection abstraction (Firebase modular SDK)
+- **UserAmiibosFirestore** - User collection Firestore abstraction
 - **UserAmiibosLocalStorage** - Local storage fallback when user is not authenticated
-- **AuthService** - Firebase authentication wrapper using `capacitor-firebase-auth`
-- **SubscriptionService** - Manages RxJS subscriptions lifecycle
+- **AuthService** - Firebase authentication wrapper (Google Sign-in with redirect)
 
 ### Firebase Configuration
 
-Firebase config is in `src/environments/environment.ts` (and `environment.prod.ts`). The app connects to the `amiibos-firebase` project. Capacitor Firebase Auth is configured in `capacitor.config.json` for Google Sign-in.
+Firebase config is in `src/environments/environment.ts` (and `environment.prod.ts`). The app connects to the `amiibos-firebase` project using the Firebase 10 modular SDK:
+
+- `provideFirebaseApp()` - Initialize Firebase app
+- `provideAuth()` - Firebase Authentication
+- `provideFirestore()` - Cloud Firestore
+
+Authentication uses `signInWithRedirect` for Google Sign-in (web-only, no native mobile).
 
 ### Routing
 
-Main route is `/amiibos` with query params for filtering (`?series=...`). All other routes redirect to `/amiibos`. Uses `PreloadAllModules` strategy for lazy-loaded pages.
+Routes are defined in `src/app/app.routes.ts`:
+- `/amiibos/figures` - Amiibo figures collection
+- `/amiibos/cards` - Amiibo cards collection
+- Uses `loadComponent` for lazy loading
+- `PreloadAllModules` strategy for optimal performance
+- Route data contains `type` filter for collection type
 
 ### PWA & Service Worker
 
-Production builds enable Angular Service Worker (`ngsw-worker.js`) for offline functionality. Configuration in `src/ngsw-config.json`.
+Production builds enable Angular Service Worker (`ngsw-worker.js`) for offline functionality:
+- Configuration in `src/ngsw-config.json`
+- Configured via `provideServiceWorker()` in `main.ts`
+- Installable as a PWA on mobile and desktop
+- Works offline with cached data
 
 ## Important Patterns
 
-### NGXS Firestore Connection
-When connecting Firestore to NGXS state, use `ngxsFirestoreConnect.connect()` in `ngxsOnInit()`. The connection automatically handles streaming updates and emits `StreamEmitted` actions that are handled separately.
+### Signal-Based State Management
+
+**Creating Signals:**
+```typescript
+private readonly dataSignal = signal<DataType[]>([]);
+public readonly data = this.dataSignal.asReadonly();
+```
+
+**Computed Values:**
+```typescript
+public readonly filteredData = computed(() => {
+  return this.data().filter(item => /* filter logic */);
+});
+```
+
+**Converting Signals to Observables:**
+```typescript
+public readonly data$ = toObservable(this.store.data);
+```
+
+**Converting Observables to Signals:**
+```typescript
+private readonly userSignal = toSignal(this.authService.getUser(), {
+  initialValue: undefined
+});
+```
+
+### Firebase Modular SDK Patterns
+
+**Reading Collections:**
+```typescript
+const ref = collection(this.firestore, 'collection-name');
+return collectionData(ref, { idField: 'id' }) as Observable<Model[]>;
+```
+
+**Writing Documents:**
+```typescript
+const docRef = doc(this.firestore, 'collection-name', docId);
+await setDoc(docRef, data, { merge: true });
+```
+
+**Querying with Filters:**
+```typescript
+const q = query(
+  collection(this.firestore, 'collection-name'),
+  where('field', '==', value)
+);
+return collectionData(q, { idField: 'id' });
+```
 
 ### Authenticated vs Unauthenticated Data
-User collection data is stored in Firestore when authenticated, localStorage when not. The `AmiibosState.ToggleAmiibo` action checks auth state and routes to the appropriate service.
 
-### Module Registration
-Feature states must be registered with `NgxsModule.forFeature([StateClass])` in their feature module, not the root module.
+User collection data is stored in Firestore when authenticated, localStorage when not. The `AmiibosStore` automatically:
+- Subscribes to auth state changes
+- Loads user collection from Firestore when authenticated
+- Falls back to localStorage for guest users
+- Syncs changes to appropriate storage backend
+
+### Standalone Component Patterns
+
+**Component Declaration:**
+```typescript
+@Component({
+  selector: 'app-my-component',
+  templateUrl: './my-component.component.html',
+  standalone: true,
+  imports: [CommonModule, IonicModule, OtherComponents]
+})
+export class MyComponent { }
+```
+
+**New Control Flow Syntax:**
+```html
+<!-- Conditionals -->
+@if (condition) {
+  <div>Content</div>
+} @else {
+  <div>Alternative</div>
+}
+
+<!-- Loops -->
+@for (item of items; track item.id) {
+  <div>{{ item.name }}</div>
+}
+```
+
+### Dependency Injection
+
+All services use `providedIn: 'root'` for tree-shakeable providers:
+```typescript
+@Injectable({ providedIn: 'root' })
+export class MyService { }
+```
+
+For services that need to be scoped to a component:
+```typescript
+@Component({
+  providers: [ScopedService]
+})
+```
+
+## Build Configuration
+
+The application uses the ESBuild application builder for faster builds:
+- Configured in `angular.json` with builder `@angular-devkit/build-angular:application`
+- Output directory: `www/`
+- Production optimizations include tree-shaking, minification, and source maps

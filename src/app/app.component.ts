@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { AlertController, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
@@ -12,7 +12,7 @@ import { AuthStore } from './auth/services/auth.store';
   selector: 'app-root',
   templateUrl: 'app.component.html',
   standalone: true,
-  imports: [IonicModule, RouterOutlet, AsyncPipe, NgIf]
+  imports: [IonicModule, RouterOutlet, RouterLink, AsyncPipe, NgIf]
 })
 export class AppComponent {
 

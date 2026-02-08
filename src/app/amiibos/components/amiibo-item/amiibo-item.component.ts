@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { AbstractControl, UntypedFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { ToggleChangeEventDetail } from '@ionic/core';
 import { Subscription } from 'rxjs';
 import { AmiiboModel } from '../../models/amiibo.model';
 import { IonicModule } from '@ionic/angular';
