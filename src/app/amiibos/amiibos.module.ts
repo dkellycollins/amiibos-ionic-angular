@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin';
 import { NgxsModule } from '@ngxs/store';
+import { AmiiboCollectedToggleComponent } from './components/amiibo-collected-toggle/amiibo-collected-toggle.component';
 import { AmiiboItemComponent } from './components/amiibo-item/amiibo-item.component';
 import { AmiibosListComponent } from './components/amiibos-list/amiibos-list.component';
 import { SelectSeriesModalComponent } from './components/select-series-modal/select-series-modal.component';
@@ -25,11 +26,13 @@ import { AmiibosState } from './state/amiibos.state';
     ReactiveFormsModule
   ],
   declarations: [
+    AmiiboCollectedToggleComponent,
     AmiiboItemComponent,
     AmiibosListComponent,
     SelectSeriesModalComponent
   ],
   exports: [
+    AmiiboCollectedToggleComponent,
     AmiiboItemComponent,
     AmiibosListComponent,
     SelectSeriesModalComponent

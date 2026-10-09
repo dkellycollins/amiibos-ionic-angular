@@ -1,7 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormBuilder } from '@angular/forms';
-import { ToggleChangeEventDetail } from '@ionic/core';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { AmiiboModel } from '../../models/amiibo.model';
 
 @Component({
@@ -9,45 +6,27 @@ import { AmiiboModel } from '../../models/amiibo.model';
   templateUrl: './amiibo-item.component.html',
   styleUrls: ['./amiibo-item.component.scss'],
 })
-export class AmiiboItemComponent implements OnInit, OnDestroy {
+export class AmiiboItemComponent {
 
   @Input()
   public amiibo: AmiiboModel;
 
   @Input()
-  public get collected(): boolean {
-    return this.control.value();
-  }
-  public set collected(value: boolean) {
-    this.control.setValue(value, { emitEvent: false });
-  }
+  public collected: boolean;
 
   @Input()
   public expanded: boolean;
 
   @Output()
-  public collectedChanged: EventEmitter<boolean>;
+  public collectedChanged: EventEmitter<boolean> = new EventEmitter();
 
-  public control: AbstractControl;
+  /**
+   * Emits when the item itself (not the toggle) is tapped.
+   */
+  @Output()
+  public selected: EventEmitter<void> = new EventEmitter();
 
-  private subscriptions: Array<Subscription>;
-
-  constructor(
-    private readonly formBuilder: FormBuilder
-  ) {
-    this.collectedChanged = new EventEmitter();
-    this.control = this.formBuilder.control(false);
-  }
-
-  public ngOnInit(): void {
-    const valueChangesSub = this.control.valueChanges.subscribe(value => this.collectedChanged.emit(value));
-
-    this.subscriptions = [valueChangesSub];
-  }
-
-  public ngOnDestroy(): void {
-    for (const subscription of this.subscriptions) {
-      subscription.unsubscribe();
-    }
+  public onClick(): void {
+    this.selected.emit();
   }
 }

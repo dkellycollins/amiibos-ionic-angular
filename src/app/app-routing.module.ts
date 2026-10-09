@@ -3,6 +3,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: 'amiibos', loadChildren: () => import('./pages/amiibos/amiibos.module').then(m => m.AmiibosPageModule) },
+  { path: 'amiibo/:slug', loadChildren: () => import('./pages/amiibo-details/amiibo-details.module').then(m => m.AmiiboDetailsPageModule) },
   { path: '**', redirectTo: 'amiibos' },
 ];
 

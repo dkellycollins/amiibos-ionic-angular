@@ -55,6 +55,10 @@ export class AmiibosPage implements OnInit {
     await this.router.navigate([], { relativeTo: this.activatedRoute, queryParams: { series: data }});
   }
 
+  public async openAmiibo(slug: string): Promise<void> {
+    await this.router.navigate(['/amiibo', slug]);
+  }
+
   public toggleAmiibo({ slug, collected }: { slug: string, collected: boolean }): void {
     this.amiibosService.toggleAmiibo(slug, collected);
   }

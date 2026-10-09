@@ -4,6 +4,7 @@
     [amiibo]="amiibo"
     [collected]="amiibo.isCollected"
     (collectedChanged)="onCollectedChanged(amiibo.slug, $event)"
+    (selected)="onAmiiboSelected(amiibo.slug)"
   >
   </app-amiibo-item>
 </ion-list>

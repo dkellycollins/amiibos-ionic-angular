@@ -1,0 +1,81 @@
+<ng-container *ngIf="viewModel$ | async as viewModel">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/amiibos"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{viewModel.amiibo?.name}}</ion-title>
+      <ion-buttons slot="end" *ngIf="viewModel.status === 'found'">
+        <app-amiibo-collected-toggle
+          color="light"
+          [collected]="viewModel.amiibo.isCollected"
+          (collectedChanged)="toggleAmiibo(viewModel.amiibo.slug, $event)"
+        >
+        </app-amiibo-collected-toggle>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <!-- Loading -->
+    <div class="amiibo-details__message" *ngIf="viewModel.status === 'loading'">
+      <ion-spinner></ion-spinner>
+    </div>
+
+    <!-- Not found -->
+    <div class="amiibo-details__message" *ngIf="viewModel.status === 'not-found'">
+      <p>Amiibo not found.</p>
+    </div>
+
+    <!-- Details -->
+    <ng-container *ngIf="viewModel.status === 'found'">
+      <div class="amiibo-details__image-container">
+        <ion-img
+          class="amiibo-details__image"
+          [src]="viewModel.amiibo.figureUrl"
+          [alt]="viewModel.amiibo.name"
+        >
+        </ion-img>
+      </div>
+
+      <ion-list>
+        <ion-item lines="full">
+          <ion-label>
+            <p>Series</p>
+            <h2>{{viewModel.amiibo.series}}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-label>
+            <p>Release date</p>
+            <h2>{{viewModel.releaseDate || 'Unknown'}}</h2>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <div
+        class="ion-padding"
+        *ngIf="viewModel.amiibo.description"
+        [innerHTML]="viewModel.amiibo.description"
+      >
+      </div>
+
+      <div class="amiibo-details__store-links">
+        <a
+          *ngFor="let storeLink of viewModel.storeLinks"
+          class="amiibo-details__store-link"
+          [href]="storeLink.url"
+          target="_blank"
+          rel="noopener noreferrer"
+          [title]="'Search ' + storeLink.name"
+        >
+          <img
+            class="amiibo-details__store-logo"
+            [src]="storeLink.logoUrl"
+            [alt]="'Search ' + storeLink.name"
+          />
+        </a>
+      </div>
+    </ng-container>
+  </ion-content>
+</ng-container>

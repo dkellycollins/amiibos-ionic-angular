@@ -15,6 +15,7 @@
   <app-amiibos-list 
     [amiibos]="collectedAmiibos$ | async"
     (collectedChanged)="toggleAmiibo($event)"
+    (amiiboSelected)="openAmiibo($event)"
   >
   </app-amiibos-list>
 </ion-content>

@@ -1,0 +1,42 @@
+// Padding lives on the container so it doesn't add to the image's height.
+.amiibo-details__image-container {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+// ion-img renders its <img> inside a shadow root, sized to 100% of the host.
+// A fixed host height keeps the image to the top part of the page; the inner
+// <img> inherits object-fit, so the figure scales down and stays centered.
+.amiibo-details__image {
+  display: block;
+  width: 100%;
+  height: 40vh;
+  object-fit: contain;
+  object-position: center;
+}
+
+.amiibo-details__message {
+  display: flex;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+// Store logos sit in a single centered row below the description.
+.amiibo-details__store-links {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 32px;
+  padding: 16px;
+}
+
+.amiibo-details__store-link {
+  display: block;
+  padding: 8px;
+}
+
+.amiibo-details__store-logo {
+  display: block;
+  width: 48px;
+  height: 48px;
+}

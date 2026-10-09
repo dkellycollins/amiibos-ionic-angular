@@ -14,20 +14,18 @@ export class AmiibosListComponent {
   @Output()
   public collectedChanged: EventEmitter<{ slug: string, collected: boolean }> = new EventEmitter();
 
-  /*
-  private selectedAmiibo: string | null = null;
-
-  public onItemClick = debounce((slug: string): void => {
-    this.selectedAmiibo = this.selectedAmiibo === slug ? null : slug;
-  }, 100);
-
-  public isSelected(slug: string): boolean {
-    return this.selectedAmiibo === slug;
-  }
-  */
+  /**
+   * Emits the slug of the Amiibo that was tapped.
+   */
+  @Output()
+  public amiiboSelected: EventEmitter<string> = new EventEmitter();
 
   public onCollectedChanged(slug: string, collected: boolean): void {
     this.collectedChanged.next({ slug, collected });
+  }
+
+  public onAmiiboSelected(slug: string): void {
+    this.amiiboSelected.next(slug);
   }
 
   public getAmiiboId(amiibo: AmiiboModel): string {
