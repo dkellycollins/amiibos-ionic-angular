@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { AuthActions } from 'src/app/auth/state/auth.actions';
 import { AuthState } from 'src/app/auth/state/auth.state';
 import { AmiiboModel } from '../models/amiibo.model';
+import { AmiiboSortModel, DEFAULT_AMIIBO_SORT } from '../models/amiibo-sort.model';
 import { UserAmiiboModel } from '../models/user-amiibo.model';
 import { AmiibosFirestore } from '../services/amiibos.firestore';
 import { UserAmiibosFirestore } from '../services/user-amiibos.firestore';
@@ -21,7 +22,8 @@ export interface AmiibosStateModel {
   userAmiibos: Array<UserAmiiboModel>;
   filters: {
     type: string,
-    series: string
+    series: string,
+    sort: AmiiboSortModel
   };
 }
 
@@ -32,7 +34,8 @@ export interface AmiibosStateModel {
     userAmiibos: [],
     filters: {
       type: null,
-      series: null
+      series: null,
+      sort: DEFAULT_AMIIBO_SORT
     }
   },
 })

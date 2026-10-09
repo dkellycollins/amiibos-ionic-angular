@@ -1,3 +1,5 @@
+import { AmiiboSortModel } from '../models/amiibo-sort.model';
+
 export namespace AmiibosActions {
   export class LoadAmiibos {
     public static readonly type = '[Amiibos] Load Amiibos';
@@ -15,7 +17,7 @@ export namespace AmiibosActions {
     public static readonly type = '[Amiibos] Set filters';
 
     constructor(
-      public readonly filters: { type?: string, series?: string }
+      public readonly filters: { type?: string, series?: string, sort?: AmiiboSortModel }
     ) { }
   }
 

@@ -1,9 +1,11 @@
 import { createSelector, Selector } from '@ngxs/store';
 import keyBy from 'lodash/keyBy';
+import { AmiiboSortModel } from '../models/amiibo-sort.model';
 import { AmiiboModel } from '../models/amiibo.model';
 import { CollectableAmiiboModel } from '../models/collectable-amiibo.model';
 import { CollectionProgressModel } from '../models/collection-progress.model';
 import { UserAmiiboModel } from '../models/user-amiibo.model';
+import { sortAmiibos } from './amiibo-sort';
 import { AmiibosState, AmiibosStateModel } from './amiibos.state';
 
 export class AmiibosSelectors {
@@ -28,6 +30,11 @@ export class AmiibosSelectors {
     return state.filters.series;
   }
 
+  @Selector([AmiibosState])
+  public static selectedSort(state: AmiibosStateModel): AmiiboSortModel {
+    return state.filters.sort;
+  }
+
   @Selector([AmiibosSelectors.allAmiibos, AmiibosSelectors.selectedType])
   public static series(amiibos: Array<AmiiboModel>, selectedType: string): Array<String> {
     return amiibos
@@ -38,19 +45,27 @@ export class AmiibosSelectors {
       .sort();
   }
 
-  @Selector([AmiibosSelectors.allAmiibos, AmiibosSelectors.selectedType, AmiibosSelectors.selectedSeries])
+  @Selector([
+    AmiibosSelectors.allAmiibos,
+    AmiibosSelectors.selectedType,
+    AmiibosSelectors.selectedSeries,
+    AmiibosSelectors.selectedSort
+  ])
   public static selectedAmiibos(
     amiibos: Array<AmiiboModel>,
     selectedType: string,
-    selectedSeries: string
+    selectedSeries: string,
+    selectedSort: AmiiboSortModel
   ): Array<AmiiboModel> {
     if (!selectedType) {
       return [];
     }
 
-    return amiibos
+    const filteredAmiibos = amiibos
       .filter(amiibo => amiibo.type === selectedType)
       .filter(amiibo => !selectedSeries || amiibo.series === selectedSeries);
+
+    return sortAmiibos(filteredAmiibos, selectedSort);
   }
 
   @Selector([AmiibosSelectors.selectedAmiibos, AmiibosSelectors.userAmiibos])

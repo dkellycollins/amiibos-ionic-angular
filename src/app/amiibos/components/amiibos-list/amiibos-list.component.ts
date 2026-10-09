@@ -28,7 +28,10 @@ export class AmiibosListComponent {
     this.amiiboSelected.next(slug);
   }
 
-  public getAmiiboId(amiibo: AmiiboModel): string {
+  /**
+   * `trackBy` for the list, so each Amiibo keeps its own element when the list is sorted or filtered.
+   */
+  public getAmiiboId(index: number, amiibo: AmiiboModel): string {
     return amiibo.slug;
   }
 }

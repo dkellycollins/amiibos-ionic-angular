@@ -1,0 +1,4 @@
+// Block-level so the list can animate this element with transforms (see AnimateListChangesDirective).
+:host {
+  display: block;
+}

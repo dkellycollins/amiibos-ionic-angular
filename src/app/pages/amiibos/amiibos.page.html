@@ -8,6 +8,17 @@
       <ion-button (click)="selectSeries()">
         <ion-icon name="funnel"></ion-icon>
       </ion-button>
+      <ion-button aria-label="Sort by" (click)="selectSortField()">
+        <ion-icon name="swap-vertical"></ion-icon>
+      </ion-button>
+      <ng-container *ngIf="selectedSort$ | async as selectedSort">
+        <ion-button
+          [attr.aria-label]="selectedSort.direction === 'asc' ? 'Sort ascending' : 'Sort descending'"
+          (click)="toggleSortDirection()"
+        >
+          <ion-icon [name]="selectedSort.direction === 'asc' ? 'arrow-up' : 'arrow-down'"></ion-icon>
+        </ion-button>
+      </ng-container>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

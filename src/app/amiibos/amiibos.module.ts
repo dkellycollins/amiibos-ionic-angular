@@ -5,11 +5,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { NgxsFirestoreModule } from '@ngxs-labs/firestore-plugin';
 import { NgxsModule } from '@ngxs/store';
+import { CoreModule } from '../core/core.module';
 import { AmiiboCollectedToggleComponent } from './components/amiibo-collected-toggle/amiibo-collected-toggle.component';
 import { AmiiboItemComponent } from './components/amiibo-item/amiibo-item.component';
 import { AmiibosListComponent } from './components/amiibos-list/amiibos-list.component';
 import { SelectSeriesModalComponent } from './components/select-series-modal/select-series-modal.component';
 import { SelectSeriesModalService } from './components/select-series-modal/select-series-modal.service';
+import { SelectSortActionSheetService } from './components/select-sort-action-sheet/select-sort-action-sheet.service';
 import { AmiibosFirestore } from './services/amiibos.firestore';
 import { AmiibosService } from './services/amiibos.service';
 import { UserAmiibosFirestore } from './services/user-amiibos.firestore';
@@ -23,7 +25,8 @@ import { AmiibosState } from './state/amiibos.state';
     AngularFirestoreModule,
     NgxsModule.forFeature([AmiibosState]),
     NgxsFirestoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CoreModule
   ],
   declarations: [
     AmiiboCollectedToggleComponent,
@@ -39,6 +42,7 @@ import { AmiibosState } from './state/amiibos.state';
   ],
   providers: [
     SelectSeriesModalService,
+    SelectSortActionSheetService,
     AmiibosFirestore,
     UserAmiibosFirestore,
     UserAmiibosLocalStorage,

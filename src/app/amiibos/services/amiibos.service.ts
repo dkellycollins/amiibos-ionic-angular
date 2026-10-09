@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { Select, Store } from "@ngxs/store";
 import { Observable } from "rxjs";
 import { AmiiboModel } from "../models/amiibo.model";
+import { AmiiboSortModel } from "../models/amiibo-sort.model";
 import { CollectableAmiiboModel } from "../models/collectable-amiibo.model";
 import { CollectionProgressModel } from "../models/collection-progress.model";
 import { AmiibosActions } from "../state/amiibos.actions";
@@ -17,6 +18,9 @@ export class AmiibosService {
 
   @Select(AmiibosSelectors.selectedSeries)
   public readonly selectedSeries$: Observable<string>;
+
+  @Select(AmiibosSelectors.selectedSort)
+  public readonly selectedSort$: Observable<AmiiboSortModel>;
 
   @Select(AmiibosSelectors.collectedAmiibos)
   public readonly collectedAmiibos$: Observable<Array<AmiiboModel & { isCollected: boolean }>>;
@@ -36,7 +40,7 @@ export class AmiibosService {
     return this.store.dispatch(new AmiibosActions.LoadAmiibos());
   }
 
-  public setFilters(filters: { type?: string, series?: string }): Observable<unknown> {
+  public setFilters(filters: { type?: string, series?: string, sort?: AmiiboSortModel }): Observable<unknown> {
     return this.store.dispatch(new AmiibosActions.SetFilters(filters))
   }
 

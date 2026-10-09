@@ -1,6 +1,7 @@
-<ion-list>
+<ion-list [appAnimateListChanges]="amiibos">
   <app-amiibo-item
     *ngFor="let amiibo of amiibos; trackBy: getAmiiboId"
+    [attr.data-animate-key]="amiibo.slug"
     [amiibo]="amiibo"
     [collected]="amiibo.isCollected"
     (collectedChanged)="onCollectedChanged(amiibo.slug, $event)"
